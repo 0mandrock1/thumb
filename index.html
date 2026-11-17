@@ -130,6 +130,8 @@
 :root{--ink-1:var(--page-accent,#ef4972);--ink-2:var(--action,#f15abf);--ink-3:var(--info,#4cd1e3);--ink-4:var(--ok,#b8ed87);color-scheme:dark;font-family:system-ui,sans-serif;background:var(--background,#140509);color:var(--foreground,#f8e8ed)}
 *{box-sizing:border-box}
 body{margin:0;background:radial-gradient(ellipse at 50% 80%,color-mix(in oklch,var(--page-accent,#eb2450) 15%,transparent),transparent 65%);min-height:100dvh}
+html,body,.shell,.shell *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+html,body{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 button:focus-visible{outline:2px solid var(--info,#51ddf0);outline-offset:3px}
 .shell{min-height:100svh;max-width:540px;margin:auto;padding:max(15px,env(safe-area-inset-top)) 16px max(12px,env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:16px}
@@ -232,6 +234,9 @@ h2{font-size:clamp(1.6rem,7vw,2.45rem);letter-spacing:-.055em;line-height:1}
 <script>
 'use strict';
 const $ = (id) => document.getElementById(id);
+document.addEventListener('selectstart', (event) => event.preventDefault());
+document.addEventListener('contextmenu', (event) => event.preventDefault());
+document.addEventListener('dblclick', (event) => event.preventDefault());
 const modes = {
   pulse: ['Пульс', 'Відбивай темп одним пальцем. Після паузи почнеться нова серія.'],
   loop: ['Петля', 'Свайпай за стрілкою: вгору, праворуч, униз, ліворуч. У своєму темпі.'],
@@ -883,6 +888,20 @@ const sandFallback = [[239, 73, 114], [241, 90, 191], [76, 209, 227], [184, 237,
 let SH = 0, sandCells = null, sandBuf = null, sandImg = null, sandRgb = null;
 let sandFrame = 0, sandPour = null, sandLayer = 0, sandFlip = false;
 let gyroEnabled = false;
+let gyroOrientationLocked = false;
+async function lockGyroOrientation() {
+  try {
+    if (typeof screen.orientation?.lock === 'function') {
+      await screen.orientation.lock('portrait');
+      gyroOrientationLocked = true;
+    }
+  } catch { gyroOrientationLocked = false; }
+}
+function unlockGyroOrientation() {
+  if (!gyroOrientationLocked) return;
+  try { screen.orientation?.unlock?.(); } catch {}
+  gyroOrientationLocked = false;
+}
 const gravity = { x: 0, y: 1 };
 function updateGyroUI() {
   for (const id of ['rollGyro', 'sandGyro']) {
@@ -906,6 +925,7 @@ async function toggleGyro() {
   if (gyroEnabled) {
     gyroEnabled = false;
     window.removeEventListener('deviceorientation', onOrientation);
+    unlockGyroOrientation();
     gravity.x = 0; gravity.y = 1;
     updateGyroUI();
     if (mode === 'test') sandKick();
@@ -923,6 +943,7 @@ async function toggleGyro() {
     gyroEnabled = true;
     gravity.x = 0; gravity.y = 1;
     window.addEventListener('deviceorientation', onOrientation);
+    void lockGyroOrientation();
     updateGyroUI();
     if (mode === 'roll') launchBall(0, 0);
     if (mode === 'test') sandKick();
