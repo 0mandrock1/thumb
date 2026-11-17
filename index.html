@@ -148,10 +148,6 @@ h2{font-size:clamp(1.6rem,7vw,2.45rem);letter-spacing:-.055em;line-height:1}
 .panel::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:2;opacity:.25;background:repeating-linear-gradient(0deg,transparent 0 4px,#0009 4px 5px)}
 .panel[hidden],.area[hidden],.caption[hidden]{display:none}
 .area{width:100%;height:100%;min-height:inherit;display:grid;place-items:center;padding:14px}
-.pad{width:100%;height:100%;background:none;border:0;display:grid;place-content:center;justify-items:center;gap:12px;user-select:none}
-.pad:focus-visible{outline-offset:-6px}
-.disc{width:clamp(118px,38vw,184px);aspect-ratio:1;border-radius:50%;display:grid;place-content:center;border:1px solid var(--page-accent,#eb2450);background:radial-gradient(circle,transparent 47%,color-mix(in oklch,var(--page-accent,#eb2450) 12%,transparent) 48% 49%,transparent 50% 65%,color-mix(in oklch,var(--page-accent,#eb2450) 35%,transparent) 66%,transparent 68%);box-shadow:0 0 36px color-mix(in oklch,var(--page-accent,#eb2450) 23%,transparent);font-size:2rem}
-.pad:active .disc{background-color:color-mix(in oklch,var(--page-accent,#eb2450) 35%,transparent)}
 .meter{font-size:.8rem;font-variant-numeric:tabular-nums}
 .tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
 .tabs button,.small{min-height:44px;border:1px solid var(--border,#542531);border-radius:var(--radius-card,4px);background:var(--card,#230811);font-size:clamp(.68rem,3.2vw,.82rem);padding:5px 4px}
@@ -162,16 +158,12 @@ h2{font-size:clamp(1.6rem,7vw,2.45rem);letter-spacing:-.055em;line-height:1}
 .stack{display:grid;justify-items:center;gap:10px;text-align:center}
 .stepper{display:flex;justify-content:center;gap:8px;width:100%;flex-wrap:wrap}
 .stepper button{min-width:53px;padding-inline:12px}
-.number{font-size:clamp(2rem,13vw,4.5rem);line-height:1;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-.cell{width:clamp(43px,13vw,58px);aspect-ratio:1;border:1px solid var(--border,#542531);border-radius:4px;background:var(--card,#230811);color:var(--muted-foreground,#d7a6b4)}
-.cell[aria-pressed="true"]{border-color:var(--page-accent,#eb2450);background:color-mix(in oklch,var(--page-accent,#eb2450) 42%,var(--background,#140509));color:var(--foreground,#f8e8ed)}
 .field{position:absolute;inset:0;width:100%;height:100%;display:block}
-#sandShake,#orbitClear{position:absolute;z-index:3;right:12px;bottom:10px}
+#sandShake,#orbitClear,#sproutClear{position:absolute;z-index:3;right:12px;bottom:10px}
 .gyro-toggle{position:absolute;z-index:3;right:12px;top:10px;min-width:110px}
 .gyro-toggle[aria-pressed="true"]{border-color:var(--page-accent,#eb2450);color:var(--foreground,#fff);background:color-mix(in oklch,var(--page-accent,#eb2450) 30%,var(--card,#230811))}
 .overlay{position:absolute;z-index:1;left:14px;bottom:12px;padding:5px 8px;background:var(--background,#140509);border-left:2px solid var(--page-accent,#eb2450);pointer-events:none}
-#orbitStat{right:112px;width:fit-content;transition:background-color .4s}
+#orbitStat,#sproutStat{right:112px;width:fit-content;transition:background-color .4s}
 #orbitStat.rec{background:color-mix(in oklch,var(--page-accent,#eb2450) 38%,var(--background,#140509))}
 .ball{position:absolute;top:0;left:0;width:33px;height:33px;border-radius:50%;background:radial-gradient(circle at 34% 26%,var(--foreground,#f8e8ed),var(--page-accent,#eb2450) 30%,var(--background,#140509) 70%);box-shadow:0 0 22px var(--page-accent,#eb2450);pointer-events:none}
 .track{position:absolute;inset:14px;border:1px dashed var(--border,#542531);border-radius:24px;pointer-events:none;background:radial-gradient(circle,color-mix(in oklch,var(--page-accent,#eb2450) 28%,transparent) 1px,transparent 1px) center/14px 14px}
@@ -179,11 +171,11 @@ h2{font-size:clamp(1.6rem,7vw,2.45rem);letter-spacing:-.055em;line-height:1}
 @media (max-height:600px){.shell{gap:8px}.intro{min-height:0;margin-bottom:8px}.panel{min-height:200px}}
 </style>
 <!-- og:start (managed by og-preview skill) -->
-<meta name="description" content="Keeps the phone hand busy while the rest of you is busy with something else. Eight no-sound, no-attention activities for one thumb: tap a tempo, follow the arrow loop, paint glitches, roll a ball, keep a counter, clear the knot, recall a cube algorithm, pour sand. Mobile-first, no login.">
+<meta name="description" content="Keeps the phone hand busy while the rest of you is busy with something else. Eight no-sound, no-attention activities for one thumb: sling planets into orbit, follow the arrow loop, paint glitches, roll a ball, grow a vine, crack the ice, recall a cube algorithm, pour sand. Mobile-first, no login.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="mandrock tools">
 <meta property="og:title" content="Thumb">
-<meta property="og:description" content="Keeps the phone hand busy while the rest of you is busy with something else. Eight no-sound, no-attention activities for one thumb: tap a tempo, follow the arrow loop, paint glitches, roll a ball, keep a counter, clear the knot, recall a cube algorithm, pour sand. Mobile-first, no login.">
+<meta property="og:description" content="Keeps the phone hand busy while the rest of you is busy with something else. Eight no-sound, no-attention activities for one thumb: sling planets into orbit, follow the arrow loop, paint glitches, roll a ball, grow a vine, crack the ice, recall a cube algorithm, pour sand. Mobile-first, no login.">
 <meta property="og:url" content="https://thumb.mandrock.me/">
 <meta property="og:image" content="https://thumb.mandrock.me/og.png?v=c14a4f64">
 <meta property="og:image:width" content="1200">
@@ -192,7 +184,7 @@ h2{font-size:clamp(1.6rem,7vw,2.45rem);letter-spacing:-.055em;line-height:1}
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Thumb">
-<meta name="twitter:description" content="Keeps the phone hand busy while the rest of you is busy with something else. Eight no-sound, no-attention activities for one thumb: tap a tempo, follow the arrow loop, paint glitches, roll a ball, keep a counter, clear the knot, recall a cube algorithm, pour sand. Mobile-first, no login.">
+<meta name="twitter:description" content="Keeps the phone hand busy while the rest of you is busy with something else. Eight no-sound, no-attention activities for one thumb: sling planets into orbit, follow the arrow loop, paint glitches, roll a ball, grow a vine, crack the ice, recall a cube algorithm, pour sand. Mobile-first, no login.">
 <meta name="twitter:image" content="https://thumb.mandrock.me/og.png?v=c14a4f64">
 <!-- og:end -->
 </head>
@@ -216,11 +208,14 @@ h2{font-size:clamp(1.6rem,7vw,2.45rem);letter-spacing:-.055em;line-height:1}
 <div class="field pointer" id="rollPad" tabindex="0" aria-label="Поле кульки. Також працюють стрілки клавіатури."><div class="track"></div><span class="ball" id="ball"></span></div>
 <button class="small gyro-toggle" id="rollGyro" aria-pressed="false">Гіроскоп</button>
 </section>
-<section class="panel" id="count" aria-labelledby="modeName" hidden>
-<div class="area"><div class="stack"><button class="pad" id="increment" aria-label="Додати один"><span class="disc number" id="number" aria-live="polite">0</span></button><div class="stepper"><button class="small" id="decrement" aria-label="Відняти один">−1</button><button class="small" id="resetCount">Скинути</button></div></div></div>
+<section class="panel" id="sprout" aria-labelledby="modeName" hidden>
+<canvas id="sproutPad" class="field pointer" tabindex="0" role="button" aria-label="Пагін: поле саду. Тримай палець, і лоза тягнеться до нього; відпусти, щоб розпустився бутон. Утримуй Enter або пробіл, щоб виростити лозу до випадкової цілі, стрілки зсувають ціль."></canvas>
+<span class="caption overlay" id="sproutStat" role="status">Довжина 0 м · бутонів 0</span>
+<button class="small" id="sproutClear">Скосити</button>
 </section>
-<section class="panel" id="knot" aria-labelledby="modeName" hidden>
-<div class="area"><div class="stack"><div class="grid" id="grid" aria-label="Поле три на три"></div><div class="meter" id="knotStat" role="status"></div><button class="small" id="nextKnot">Інший вузол</button></div></div>
+<section class="panel" id="crack" aria-labelledby="modeName" hidden>
+<canvas id="crackPad" class="field pointer" tabindex="0" role="button" aria-label="Тріщина: плита льоду. Тапни, щоб розбити її на уламки. Enter або пробіл б’є у випадкову точку."></canvas>
+<span class="caption overlay" id="crackStat" role="status">Уламків 1 · плит розбито 0</span>
 </section>
 <section class="panel" id="cube" aria-labelledby="modeName" hidden>
 <div class="area"><div class="stack"><strong id="cubeName"></strong><span id="cubeMoves" role="status"></span><div class="stepper"><button class="small" id="cubeReveal">Наступний хід</button><button class="small" id="cubeNext">Інша картка</button></div></div></div>
@@ -246,8 +241,8 @@ const modes = {
   loop: ['Петля', 'Свайпай за стрілкою: вгору, праворуч, униз, ліворуч. У своєму темпі.'],
   glitch: ['Глітч', 'Торкнись для нового ефекту. Проведи пальцем, щоб лишити слід.'],
   roll: ['Перекат', 'Підхопи кульку, проведи й відпусти. Вона покотиться за інерцією.'],
-  count: ['Лічильник', 'Торкнись числа, щоб додати один. Значення лишається між візитами.'],
-  knot: ['Вузол', 'Погаси всі клітинки. Дотик перемикає клітинку та її сусідів по хресту.'],
+  sprout: ['Пагін', 'Тримай палець — лоза тягнеться до нього. Відпусти, щоб розпустився бутон.'],
+  crack: ['Тріщина', 'Тапай по льоду. Дрібні уламки вибиваються, розбита плита замерзає знову.'],
   cube: ['Кубик', 'Пригадай алгоритм 3×3 і відкривай по одному ходу.'],
   test: ['Пісок', 'Сип пісок пальцем. Кожен новий дотик змінює колір; гіроскоп дає керувати нахилом.'],
 };
@@ -278,6 +273,8 @@ function select(id) {
   if (mode === id) return;
   if (mode === 'test' && sandCells) sandSave();
   if (mode === 'orbit') orbitLeave();
+  if (mode === 'sprout') sproutLeave();
+  if (mode === 'crack') crackStop();
   mode = id;
   for (const [key, button] of tabs) {
     $(key).hidden = key !== id;
@@ -289,6 +286,8 @@ function select(id) {
   else if (id === 'glitch') paintGlitchField();
   else if (id === 'roll') { placeBall(); if (gyroEnabled) launchBall(0, 0); }
   else if (id === 'test') sandShow();
+  else if (id === 'sprout') sproutShow();
+  else if (id === 'crack') crackShow();
 }
 
 const directions = ['ArrowUp', 'ArrowRight', 'ArrowDown', 'ArrowLeft'];
@@ -321,52 +320,6 @@ $('loopPad').onkeydown = (event) => {
   event.preventDefault();
   if (!event.repeat) follow(event.key);
 };
-
-let count = Number(read('count'));
-if (!Number.isSafeInteger(count) || count < 0 || count > 999999) count = 0;
-function updateCount(value) {
-  count = Math.max(0, Math.min(999999, value));
-  $('number').style.fontSize = count >= 1000 ? '2rem' : '';
-  $('number').textContent = count;
-  $('decrement').disabled = count === 0;
-  save('count', count);
-}
-$('increment').onclick = () => updateCount(count + 1);
-$('decrement').onclick = () => updateCount(count - 1);
-$('resetCount').onclick = () => updateCount(0);
-updateCount(count);
-
-const crosses = Array.from({ length: 9 }, (_, i) => Array.from({ length: 9 }, (_, j) => j)
-  .filter((j) => Math.abs(i % 3 - j % 3) + Math.abs(Math.floor(i / 3) - Math.floor(j / 3)) <= 1)
-  .reduce((mask, j) => mask | (1 << j), 0));
-let knot;
-let previousKnot;
-const cells = crosses.map((cross, i) => {
-  const cell = document.createElement('button');
-  cell.className = 'cell';
-  cell.setAttribute('aria-label', 'Рядок ' + (Math.floor(i / 3) + 1) + ', стовпець ' + (i % 3 + 1));
-  cell.onclick = () => { if (knot) { knot ^= cross; showKnot(); } };
-  $('grid').append(cell);
-  return cell;
-});
-function showKnot() {
-  for (const [i, cell] of cells.entries()) {
-    const lit = Boolean(knot & (1 << i));
-    cell.setAttribute('aria-pressed', String(lit));
-    cell.textContent = lit ? '◆' : '·';
-    cell.setAttribute('aria-disabled', String(!knot));
-  }
-  $('knotStat').textContent = knot ? 'Горить: ' + cells.filter((_, i) => knot & (1 << i)).length : 'Розв’язано';
-}
-function newKnot() {
-  const moves = 3 + Math.floor(Math.random() * 3);
-  do { knot = shuffle(crosses).slice(0, moves).reduce((mask, cross) => mask ^ cross, 0); }
-  while (!knot || knot === previousKnot);
-  previousKnot = knot;
-  showKnot();
-}
-$('nextKnot').onclick = newKnot;
-newKnot();
 
 const algorithms = [
   ['Sune · OLL', "R U R′ U R U2 R′"],
@@ -1393,9 +1346,680 @@ $('orbitClear').onclick = () => {
 };
 new ResizeObserver(() => { if (mode === 'orbit' && orbitFit()) orbitDraw(performance.now()); }).observe(orbitCv);
 document.addEventListener('visibilitychange', () => {
-  if (document.hidden) { orbitSave(); orbitStop(); } else orbitKick();
+  if (document.hidden) { orbitSave(); orbitStop(); sproutSave(); sproutStop(); crackStop(); } else { orbitKick(); sproutKick(); crackKick(); }
 });
-window.addEventListener('pagehide', orbitSave);
+window.addEventListener('pagehide', () => { orbitSave(); sproutSave(); });
+const sproutCv = $('sproutPad');
+const sproutCtx = sproutCv.getContext('2d');
+const SPROUT_MAX = 3000, SPROUT_SEG = 6;
+let sproutW = 0, sproutH = 0, sproutDpr = 0;
+let sproutPlants = null, sproutRgb = null, sproutNextId = 1;
+let sproutVine = null, sproutTendrils = [], sproutPtr = null, sproutKey = false, sproutAim = null;
+let sproutFrame = 0, sproutLast = 0, sproutDirty = true;
+let sproutGlitch = null, sproutGlitchAt = 0, sproutStatAt = 0, sproutStatText = '';
+function sproutLoad() {
+  sproutPlants = [];
+  sproutRgb = sandColors();
+  let s = null;
+  try { s = JSON.parse(read('sprout') || 'null'); } catch {}
+  if (!Array.isArray(s)) return;
+  let total = 0;
+  const pt = (n) => clamp(n, -.5, 1.5);
+  for (const q of s) {
+    if (!q || !Array.isArray(q.s) || !Array.isArray(q.b)) continue;
+    const plant = { id: sproutNextId++, segs: [], buds: [], dying: 0 };
+    for (const t of q.s) {
+      if (total >= SPROUT_MAX) break;
+      if (!Array.isArray(t) || t.length !== 6 || !t.every(Number.isFinite)) continue;
+      plant.segs.push({ x0: pt(t[0]), y0: pt(t[1]), x1: pt(t[2]), y1: pt(t[3]), w: clamp(t[4], .5, 8), t: t[5] ? 1 : 0 });
+      total++;
+    }
+    for (const b of q.b) {
+      if (Array.isArray(b) && b.length === 2 && b.every(Number.isFinite)) plant.buds.push({ x: pt(b[0]), y: pt(b[1]), born: -1e9 });
+    }
+    if (plant.segs.length || plant.buds.length) sproutPlants.push(plant);
+  }
+}
+function sproutSave() {
+  if (!sproutPlants) return;
+  const r = (n, k = 1e4) => Math.round(n * k) / k;
+  save('sprout', JSON.stringify(sproutPlants.filter((p) => !p.dying).map((p) => ({
+    s: p.segs.map((g) => [r(g.x0), r(g.y0), r(g.x1), r(g.y1), r(g.w, 10), g.t]),
+    b: p.buds.map((b) => [r(b.x), r(b.y)]),
+  }))));
+}
+function sproutFit() {
+  const w = sproutCv.clientWidth, h = sproutCv.clientHeight;
+  if (!w || !h) return false;
+  const ratio = Math.min(devicePixelRatio || 1, 2);
+  if (w !== sproutW || h !== sproutH || ratio !== sproutDpr) {
+    sproutW = w; sproutH = h; sproutDpr = ratio;
+    sproutCv.width = Math.round(w * ratio);
+    sproutCv.height = Math.round(h * ratio);
+    sproutDirty = true;
+  }
+  if (!sproutPlants) sproutLoad();
+  return true;
+}
+function sproutHash(x, y) {
+  let h = Math.imul(Math.round(x * 1000) + 7919, 374761393) ^ Math.imul(Math.round(y * 1000) + 104729, 668265263);
+  h = Math.imul(h ^ (h >>> 13), 1274126177);
+  return (h ^ (h >>> 16)) >>> 0;
+}
+function sproutPoint(event) {
+  const r = sproutCv.getBoundingClientRect();
+  return [clamp(event.clientX - r.left, 0, sproutW), clamp(event.clientY - r.top, 0, sproutH)];
+}
+function sproutStart(x, y) {
+  sproutFit();
+  let best = null, bd = 110 * 110;
+  for (const plant of sproutPlants) {
+    if (plant.dying) continue;
+    for (const s of plant.segs) {
+      const px = s.x1 * sproutW, py = s.y1 * sproutH, d = (px - x) ** 2 + (py - y) ** 2;
+      if (d < bd) { bd = d; best = { plant, x: px, y: py, ang: Math.atan2((s.y1 - s.y0) * sproutH, (s.x1 - s.x0) * sproutW) }; }
+    }
+    for (const b of plant.buds) {
+      const px = b.x * sproutW, py = b.y * sproutH, d = (px - x) ** 2 + (py - y) ** 2;
+      if (d < bd) { bd = d; best = { plant, x: px, y: py, ang: -Math.PI / 2 }; }
+    }
+  }
+  let w0 = 3.2;
+  if (!best) {
+    const plant = { id: sproutNextId++, segs: [], buds: [], dying: 0 };
+    sproutPlants.push(plant);
+    best = { plant, x: clamp(x, 10, sproutW - 10), y: sproutH, ang: -Math.PI / 2 };
+    w0 = 5.5;
+  }
+  sproutVine = {
+    plant: best.plant, x: best.x, y: best.y, ex: best.x, ey: best.y, ang: best.ang, tx: x, ty: y,
+    speed: 60 + Math.random() * 30, len: 0, seed: Math.random() * 100, w0, nextBranch: 40 + Math.random() * 50, segs: 0,
+  };
+  sproutDirty = true;
+  sproutKick();
+}
+function sproutRelease() {
+  const v = sproutVine;
+  sproutVine = null; sproutPtr = null; sproutKey = false;
+  if (!v) return;
+  if (v.len >= SPROUT_SEG) v.plant.buds.push({ x: v.x / sproutW, y: v.y / sproutH, born: performance.now() });
+  sproutDirty = true;
+  sproutSave();
+  sproutKick();
+}
+function sproutPush(plant, x0, y0, x1, y1, w, t) {
+  plant.segs.push({ x0: x0 / sproutW, y0: y0 / sproutH, x1: x1 / sproutW, y1: y1 / sproutH, w, t });
+}
+function sproutTendril(v) {
+  const dir = Math.random() < .5 ? -1 : 1;
+  const tn = {
+    plant: v.plant, x: v.x, y: v.y, ex: v.x, ey: v.y, ang: v.ang + dir * (1 + Math.random() * .5), dir,
+    t: 0, dur: .5 + Math.random(), speed: 38 + Math.random() * 14,
+  };
+  if (reduced.matches) { while (tn.t < tn.dur) sproutTendrilStep(tn, .02); } else sproutTendrils.push(tn);
+}
+function sproutTendrilStep(tn, dt) {
+  const k = tn.t / tn.dur;
+  tn.ang += tn.dir * (1 + 6 * k) * dt;
+  tn.x += Math.cos(tn.ang) * tn.speed * dt;
+  tn.y += Math.sin(tn.ang) * tn.speed * dt;
+  tn.t += dt;
+  if (Math.hypot(tn.x - tn.ex, tn.y - tn.ey) >= 3) {
+    sproutPush(tn.plant, tn.ex, tn.ey, tn.x, tn.y, 1.8 - .8 * Math.min(k, 1), 1);
+    tn.ex = tn.x; tn.ey = tn.y;
+  }
+}
+function sproutVineStep(v, h) {
+  const dx = v.tx - v.x, dy = v.ty - v.y, dist = Math.hypot(dx, dy);
+  const slow = clamp(dist / 24, 0, 1);
+  const move = v.speed * slow * h;
+  if (move <= 0) return;
+  let d = Math.atan2(dy, dx) - v.ang;
+  d = Math.atan2(Math.sin(d), Math.cos(d));
+  const wob = Math.sin(v.len * .035 + v.seed) + Math.sin(v.len * .083 + v.seed * 2.3) * .5;
+  v.ang += clamp(d, -2.4 * h, 2.4 * h) + wob * .8 * h * slow;
+  v.x += Math.cos(v.ang) * move;
+  v.y += Math.sin(v.ang) * move;
+  v.len += move;
+  if (Math.hypot(v.x - v.ex, v.y - v.ey) >= SPROUT_SEG && v.segs < 900) {
+    sproutPush(v.plant, v.ex, v.ey, v.x, v.y, Math.max(1.1, v.w0 * Math.exp(-v.len / 260)), 0);
+    v.ex = v.x; v.ey = v.y; v.segs++;
+  }
+  if (v.len >= v.nextBranch) {
+    v.nextBranch = v.len + 55 + Math.random() * 60;
+    sproutTendril(v);
+  }
+}
+function sproutAdvance(dt, now) {
+  const v = sproutVine;
+  if (v && dt > 0) {
+    const n = Math.max(1, Math.ceil(v.speed * dt / 3));
+    for (let i = 0; i < n; i++) sproutVineStep(v, dt / n);
+  }
+  if (sproutTendrils.length) {
+    for (const tn of sproutTendrils) sproutTendrilStep(tn, dt);
+    sproutTendrils = sproutTendrils.filter((tn) => tn.t < tn.dur);
+  }
+  const fade = reduced.matches ? 400 : 1500;
+  let live = 0;
+  for (const p of sproutPlants) if (!p.dying) live += p.segs.length;
+  for (const p of sproutPlants) {
+    if (live <= SPROUT_MAX) break;
+    if (p.dying || p === v?.plant || sproutTendrils.some((tn) => tn.plant === p)) continue;
+    p.dying = now;
+    live -= p.segs.length;
+  }
+  if (sproutPlants.some((p) => p.dying && now - p.dying > fade)) {
+    sproutPlants = sproutPlants.filter((p) => !p.dying || now - p.dying <= fade);
+    sproutSave();
+  }
+  const openMs = reduced.matches ? 300 : 600;
+  if (v || sproutTendrils.length || sproutPlants.some((p) => p.dying || p.buds.some((b) => now - b.born < openMs))) sproutDirty = true;
+  if (!reduced.matches && now >= sproutGlitchAt) {
+    if (sproutGlitch) {
+      sproutGlitch = null;
+      sproutGlitchAt = now + 2500 + Math.random() * 3500;
+    } else {
+      const all = sproutPlants.filter((p) => !p.dying && p.segs.length);
+      if (all.length) {
+        const p = all[Math.floor(Math.random() * all.length)];
+        sproutGlitch = { seg: p.segs[Math.floor(Math.random() * p.segs.length)], dx: (Math.random() < .5 ? -1 : 1) * (1 + Math.random()), dy: (Math.random() - .5) * 2 };
+        sproutGlitchAt = now;
+      } else sproutGlitchAt = now + 2500;
+    }
+    sproutDirty = true;
+  }
+}
+const sproutRgba = (c, a) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
+function sproutDrawBud(g, b, now) {
+  const h = sproutHash(b.x, b.y);
+  const petals = 3 + h % 6, size = 9 + ((h >>> 6) % 8), rot = ((h >>> 9) % 360) * Math.PI / 180;
+  const c = sproutRgb[(h >>> 3) % 3], crystal = (h >>> 18) & 1;
+  const p = clamp((now - b.born) / (reduced.matches ? 300 : 600), 0, 1);
+  const e = 1 - (1 - p) ** 3;
+  const x = b.x * sproutW, y = b.y * sproutH;
+  g.save();
+  g.translate(x, y);
+  g.rotate(rot);
+  g.lineWidth = 1;
+  for (let i = 0; i < petals; i++) {
+    g.save();
+    g.rotate(i * TAU / petals);
+    const len = size * e, wd = size * .42 * e;
+    g.beginPath();
+    if (crystal) { g.moveTo(0, 0); g.lineTo(len * .45, -wd); g.lineTo(len, 0); g.lineTo(len * .45, wd); } else g.ellipse(len / 2, 0, len / 2, Math.max(.1, wd * .8), 0, 0, TAU);
+    g.closePath();
+    g.fillStyle = sproutRgba(c, .78);
+    g.strokeStyle = sproutRgba([255, 255, 255], .55);
+    g.fill(); g.stroke();
+    g.restore();
+  }
+  g.fillStyle = sproutRgba([255, 255, 255], .9);
+  g.beginPath(); g.arc(0, 0, 2 + 1.5 * e, 0, TAU); g.fill();
+  g.restore();
+  if (p >= 1) {
+    g.fillStyle = sproutRgba(c, .6);
+    for (let i = 0; i < 6; i++) {
+      const a = ((h >>> i) % 360) * Math.PI / 180, d = size * 1.2 + ((h >>> (i + 5)) & 15);
+      g.fillRect(Math.round(x + Math.cos(a) * d), Math.round(y + Math.sin(a) * d), 2, 2);
+    }
+  }
+}
+function sproutDraw(now) {
+  const g = sproutCtx;
+  g.setTransform(sproutDpr, 0, 0, sproutDpr, 0, 0);
+  g.clearRect(0, 0, sproutW, sproutH);
+  g.lineCap = 'round';
+  const fade = reduced.matches ? 400 : 1500;
+  const glitch = sproutGlitch;
+  for (const plant of sproutPlants) {
+    const alpha = plant.dying ? Math.max(0, 1 - (now - plant.dying) / fade) : 1;
+    g.globalAlpha = alpha;
+    const buckets = new Map();
+    for (const s of plant.segs) {
+      if (s === glitch?.seg) continue;
+      const key = Math.round(s.w * 2) + (s.t ? 100 : 0);
+      let path = buckets.get(key);
+      if (!path) buckets.set(key, path = new Path2D());
+      path.moveTo(s.x0 * sproutW, s.y0 * sproutH);
+      path.lineTo(s.x1 * sproutW, s.y1 * sproutH);
+    }
+    for (const [key, path] of buckets) {
+      g.lineWidth = (key % 100) / 2;
+      g.strokeStyle = sproutRgba(sproutRgb[3], key >= 100 ? .7 : .92);
+      g.stroke(path);
+    }
+    if (glitch && plant.segs.includes(glitch.seg)) {
+      const s = glitch.seg;
+      g.lineWidth = s.w;
+      g.strokeStyle = sproutRgba(sproutRgb[1], .95);
+      g.beginPath();
+      g.moveTo(s.x0 * sproutW + glitch.dx, s.y0 * sproutH + glitch.dy);
+      g.lineTo(s.x1 * sproutW + glitch.dx, s.y1 * sproutH + glitch.dy);
+      g.stroke();
+    }
+    for (const b of plant.buds) sproutDrawBud(g, b, now);
+  }
+  g.globalAlpha = 1;
+  const v = sproutVine;
+  if (v) {
+    g.fillStyle = sproutRgba(sproutRgb[2], .9);
+    g.beginPath(); g.arc(v.x, v.y, 2.5, 0, TAU); g.fill();
+    if (sproutKey) {
+      g.strokeStyle = sproutRgba(sproutRgb[2], .8);
+      g.lineWidth = 1.5;
+      g.beginPath(); g.arc(v.tx, v.ty, 7, 0, TAU); g.stroke();
+    }
+  }
+  sproutDirty = false;
+}
+function sproutStatus(now, force) {
+  if (!force && now - sproutStatAt < 1000) return;
+  let px = 0, buds = 0;
+  for (const p of sproutPlants) {
+    if (p.dying) continue;
+    buds += p.buds.length;
+    for (const s of p.segs) px += Math.hypot((s.x1 - s.x0) * sproutW, (s.y1 - s.y0) * sproutH);
+  }
+  const text = `Довжина ${Math.round(px / 100)} м · бутонів ${buds}`;
+  sproutStatAt = now;
+  if (text !== sproutStatText) { sproutStatText = text; $('sproutStat').textContent = text; }
+}
+function sproutTick(now) {
+  sproutFrame = 0;
+  if (mode !== 'sprout' || document.hidden || !sproutFit()) return;
+  const dt = sproutLast ? Math.min((now - sproutLast) / 1000, .05) : 0;
+  sproutLast = now;
+  sproutAdvance(dt, now);
+  if (sproutDirty) sproutDraw(now);
+  sproutStatus(now);
+  sproutFrame = requestAnimationFrame(sproutTick);
+}
+function sproutKick() {
+  if (sproutFrame || mode !== 'sprout' || document.hidden) return;
+  sproutLast = 0;
+  sproutFrame = requestAnimationFrame(sproutTick);
+}
+function sproutStop() {
+  cancelAnimationFrame(sproutFrame);
+  sproutFrame = 0;
+}
+function sproutShow() {
+  if (!sproutFit()) return;
+  sproutDraw(performance.now());
+  sproutStatus(performance.now(), true);
+  sproutKick();
+}
+function sproutLeave() {
+  sproutRelease();
+  sproutSave();
+  sproutStop();
+}
+sproutCv.onpointerdown = (event) => {
+  if (!event.isPrimary || event.button !== 0 || !sproutFit() || sproutKey) return;
+  sproutRelease();
+  sproutPtr = event.pointerId;
+  sproutCv.setPointerCapture(event.pointerId);
+  sproutStart(...sproutPoint(event));
+};
+sproutCv.onpointermove = (event) => {
+  if (sproutPtr !== event.pointerId || !sproutVine) return;
+  [sproutVine.tx, sproutVine.ty] = sproutPoint(event);
+};
+const sproutEnd = (event) => { if (sproutPtr === event.pointerId) sproutRelease(); };
+sproutCv.onpointerup = sproutEnd;
+sproutCv.onpointercancel = sproutEnd;
+sproutCv.onlostpointercapture = sproutEnd;
+const sproutArrows = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] };
+sproutCv.onkeydown = (event) => {
+  const dir = sproutArrows[event.key];
+  if (dir) {
+    event.preventDefault();
+    if (sproutAim && sproutFit()) {
+      sproutAim.x = clamp(sproutAim.x + dir[0] * 28, 8, sproutW - 8);
+      sproutAim.y = clamp(sproutAim.y + dir[1] * 28, 8, sproutH - 8);
+      if (sproutVine && sproutKey) { sproutVine.tx = sproutAim.x; sproutVine.ty = sproutAim.y; }
+      sproutDirty = true;
+    }
+    return;
+  }
+  if (event.key !== 'Enter' && event.key !== ' ') return;
+  event.preventDefault();
+  if (event.repeat || sproutKey || sproutPtr !== null || !sproutFit()) return;
+  sproutAim = { x: sproutW * (.15 + Math.random() * .7), y: sproutH * (.15 + Math.random() * .45) };
+  sproutKey = true;
+  sproutStart(sproutAim.x, sproutAim.y);
+};
+sproutCv.onkeyup = (event) => {
+  if ((event.key === 'Enter' || event.key === ' ') && sproutKey) sproutRelease();
+};
+sproutCv.onblur = () => { if (sproutKey) sproutRelease(); };
+$('sproutClear').onclick = () => {
+  if (!sproutFit()) return;
+  sproutRelease();
+  sproutPlants = [];
+  sproutTendrils = [];
+  sproutGlitch = null;
+  sproutSave();
+  sproutDraw(performance.now());
+  sproutStatus(performance.now(), true);
+};
+new ResizeObserver(() => { if (mode === 'sprout' && sproutFit()) sproutDraw(performance.now()); }).observe(sproutCv);
+
+const crackCv = $('crackPad');
+const crackCtx = crackCv.getContext('2d');
+let crackW = 0, crackH = 0, crackDpr = 0;
+let crackShards = null, crackFalling = [], crackPhase = 'whole', crackPhaseAt = 0;
+let crackPanes = Math.max(0, Number(read('crackPanes')) | 0);
+let crackFrame = 0, crackDirty = true, crackRgb = null;
+let crackGlitch = null, crackGlitchAt = 0, crackStatAt = 0, crackStatText = '';
+const crackArea = (pts) => {
+  let a = 0;
+  for (let i = 0; i < pts.length; i++) { const p = pts[i], q = pts[(i + 1) % pts.length]; a += p[0] * q[1] - q[0] * p[1]; }
+  return a / 2;
+};
+function crackShard(pts, hit) {
+  const n = pts.length;
+  let cx = 0, cy = 0;
+  for (const p of pts) { cx += p[0] / n; cy += p[1] / n; }
+  let hl = 0, best = -Infinity;
+  for (let i = 0; i < n; i++) {
+    const q = pts[(i + 1) % n];
+    const s = -((pts[i][0] + q[0]) / 2 - cx) - ((pts[i][1] + q[1]) / 2 - cy);
+    if (s > best) { best = s; hl = i; }
+  }
+  return { pts, area: Math.abs(crackArea(pts)), cx, cy, l: Math.random() * 2 - 1, hl, hit };
+}
+function crackWhole() {
+  return [crackShard([[0, 0], [crackW, 0], [crackW, crackH], [0, crackH]], null)];
+}
+function crackFit() {
+  const w = crackCv.clientWidth, h = crackCv.clientHeight;
+  if (!w || !h) return false;
+  const ratio = Math.min(devicePixelRatio || 1, 2);
+  if (w !== crackW || h !== crackH || ratio !== crackDpr) {
+    const old = crackShards ? [crackW, crackH] : null;
+    crackW = w; crackH = h; crackDpr = ratio;
+    crackCv.width = Math.round(w * ratio);
+    crackCv.height = Math.round(h * ratio);
+    if (old) {
+      const sx = w / old[0], sy = h / old[1];
+      const scale = (s) => crackShard(s.pts.map((p) => [p[0] * sx, p[1] * sy]), null);
+      crackShards = crackShards.map(scale);
+      crackFalling = [];
+    }
+    crackDirty = true;
+  }
+  if (!crackShards) { crackRgb = sandColors(); crackShards = crackWhole(); }
+  return true;
+}
+function crackInside(pts, x, y) {
+  let inside = false;
+  for (let i = 0, j = pts.length - 1; i < pts.length; j = i++) {
+    const a = pts[i], b = pts[j];
+    if ((a[1] > y) !== (b[1] > y) && x < (b[0] - a[0]) * (y - a[1]) / (b[1] - a[1]) + a[0]) inside = !inside;
+  }
+  return inside;
+}
+function crackBreak(poly, px, py) {
+  if (crackArea(poly) < 0) poly = [...poly].reverse();
+  const n = poly.length;
+  const count = 4 + Math.floor(Math.random() * 5);
+  const base = Math.random() * TAU, gap = TAU / count;
+  const rays = [];
+  for (let i = 0; i < count; i++) {
+    const a = base + i * gap + (Math.random() - .5) * gap * .5;
+    const dx = Math.cos(a), dy = Math.sin(a);
+    let hit = null;
+    for (let j = 0; j < n; j++) {
+      const A = poly[j], B = poly[(j + 1) % n];
+      const ex = B[0] - A[0], ey = B[1] - A[1];
+      const den = dx * ey - dy * ex;
+      if (Math.abs(den) < 1e-9) continue;
+      const t = ((A[0] - px) * ey - (A[1] - py) * ex) / den;
+      const u = ((A[0] - px) * dy - (A[1] - py) * dx) / den;
+      if (t > 1e-6 && u >= 0 && u < 1 && (!hit || t < hit.t)) hit = { t, edge: j, u };
+    }
+    if (!hit || hit.t < 4) return null;
+    rays.push({ dx, dy, len: hit.t, edge: hit.edge, s: hit.edge + hit.u });
+  }
+  const minLen = Math.min(...rays.map((r) => r.len));
+  const radii = [];
+  for (let k = 0; k < 1 + Math.floor(Math.random() * 2); k++) {
+    const r = minLen * (.25 + .4 * k + Math.random() * .15);
+    if (r > 8 && r < minLen * .9) radii.push(r);
+  }
+  for (const ray of rays) {
+    const marks = [];
+    const jag = ray.len > 20 ? 1 + Math.floor(Math.random() * 3) : 0;
+    for (let k = 0; k < jag; k++) marks.push({ d: ray.len * (k + 1 + (Math.random() - .5) * .4) / (jag + 1), ring: -1 });
+    radii.forEach((r, k) => marks.push({ d: r, ring: k }));
+    marks.sort((a, b) => a.d - b.d);
+    ray.pts = [{ x: px, y: py, ring: -1 }];
+    marks.forEach((m, i) => {
+      const off = (i % 2 ? -1 : 1) * (m.ring < 0 ? 2 + Math.random() * 4 : Math.random() * 2);
+      ray.pts.push({ x: px + ray.dx * m.d - ray.dy * off, y: py + ray.dy * m.d + ray.dx * off, ring: m.ring });
+    });
+    ray.pts.push({ x: px + ray.dx * ray.len, y: py + ray.dy * ray.len, ring: -1 });
+  }
+  const R = radii.length;
+  const out = [];
+  const stretch = (ray, m) => {
+    const s = m === 0 ? 0 : ray.pts.findIndex((p) => p.ring === m - 1);
+    const e = m === R ? ray.pts.length - 1 : ray.pts.findIndex((p) => p.ring === m);
+    return ray.pts.slice(s, e + 1);
+  };
+  for (let i = 0; i < count; i++) {
+    const A = rays[i], B = rays[(i + 1) % count];
+    const chords = radii.map((_, k) => {
+      const a = A.pts.find((p) => p.ring === k), b = B.pts.find((p) => p.ring === k);
+      const off = (Math.random() - .5) * 5;
+      const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2, l = Math.hypot(b.x - a.x, b.y - a.y) || 1;
+      return { x: mx - (b.y - a.y) / l * off, y: my + (b.x - a.x) / l * off, ring: -1 };
+    });
+    let delta = (((B.s - A.s) % n) + n) % n;
+    if (delta > n - .02) delta = 0;
+    const edgeB = delta === 0 ? A.edge : B.edge;
+    const boundary = [];
+    for (let k = (A.edge + 1) % n, stop = (edgeB + 1) % n, guard = 0; k !== stop && guard < n; k = (k + 1) % n, guard++) {
+      boundary.push({ x: poly[k][0], y: poly[k][1] });
+    }
+    for (let m = 0; m <= R; m++) {
+      const ring = stretch(A, m).slice();
+      if (m < R) ring.push(chords[m]); else ring.push(...boundary);
+      const back = stretch(B, m).reverse();
+      if (m === 0) back.pop();
+      ring.push(...back);
+      if (m > 0) ring.push(chords[m - 1]);
+      const pts = ring.map((p) => [p.x, p.y]);
+      if (Math.abs(crackArea(pts)) > .5) out.push(pts);
+    }
+  }
+  return out;
+}
+const crackSmall = () => Math.max(1500, crackW * crackH * .012);
+function crackDrop(shard, now) {
+  const dir = Math.random() < .5 ? -1 : 1;
+  crackFalling.push({ shard, t0: now, vx: dir * (10 + Math.random() * 40), rv: dir * (.5 + Math.random() * 1.5) });
+}
+function crackHit(x, y) {
+  if (crackPhase !== 'whole' || !crackFit()) return;
+  const now = performance.now();
+  const small = crackSmall(), reach = Math.max(crackW, crackH) * .3;
+  const target = crackShards.find((s) => crackInside(s.pts, x, y));
+  const keep = [];
+  for (const s of crackShards) {
+    if (s === target) continue;
+    if (s.area < small && Math.hypot(s.cx - x, s.cy - y) < reach) crackDrop(s, now); else keep.push(s);
+  }
+  if (target) {
+    let pieces = null;
+    for (let tries = 0; tries < 4 && !pieces && target.area >= 3 * small; tries++) {
+      pieces = crackBreak(target.pts, x, y);
+      x += (target.cx - x) / 4; y += (target.cy - y) / 4;
+    }
+    if (pieces) for (const pts of pieces) keep.push(crackShard(pts, { x, y, t0: now }));
+    else crackDrop(target, now);
+  }
+  crackShards = keep;
+  const rest = keep.reduce((sum, s) => sum + s.area, 0);
+  if (rest < crackW * crackH * .1) {
+    for (const s of keep) crackDrop(s, now);
+    crackShards = [];
+    crackPanes++;
+    save('crackPanes', String(crackPanes));
+    crackPhase = 'waiting';
+    crackPhaseAt = now;
+  }
+  crackDirty = true;
+  crackKick();
+}
+function crackStatus(now, force) {
+  if (!force && now - crackStatAt < 1000) return;
+  crackStatAt = now;
+  const text = `Уламків ${crackShards.length} · плит розбито ${crackPanes}`;
+  if (text !== crackStatText) { crackStatText = text; $('crackStat').textContent = text; }
+}
+function crackDraw(now) {
+  const g = crackCtx, W = crackW, H = crackH;
+  const slow = reduced.matches ? 2 : 1;
+  g.setTransform(crackDpr, 0, 0, crackDpr, 0, 0);
+  g.clearRect(0, 0, W, H);
+  g.lineJoin = 'round';
+  const grad = g.createLinearGradient(0, 0, W, H);
+  grad.addColorStop(0, sproutRgba(crackRgb[2], .3));
+  grad.addColorStop(.55, sproutRgba(crackRgb[2], .12));
+  grad.addColorStop(1, sproutRgba(crackRgb[0], .22));
+  const trace = (path, pts) => {
+    path.moveTo(pts[0][0], pts[0][1]);
+    for (let i = 1; i < pts.length; i++) path.lineTo(pts[i][0], pts[i][1]);
+    path.closePath();
+  };
+  const crackMs = 250 / slow;
+  const edges = new Path2D(), lights = new Path2D(), running = [];
+  for (const s of crackShards) {
+    const p = s.hit ? clamp((now - s.hit.t0) / crackMs, 0, 1) : 1;
+    const fill = new Path2D();
+    trace(fill, s.pts);
+    g.fillStyle = grad;
+    g.fill(fill);
+    g.fillStyle = s.l > 0 ? `rgba(255,255,255,${s.l * .07 * p})` : `rgba(0,0,0,${-s.l * .14 * p})`;
+    g.fill(fill);
+    if (p >= 1) {
+      trace(edges, s.pts);
+      const a = s.pts[s.hl], b = s.pts[(s.hl + 1) % s.pts.length];
+      lights.moveTo(a[0], a[1]); lights.lineTo(b[0], b[1]);
+    } else running.push([s, p]);
+  }
+  g.lineWidth = 1;
+  g.strokeStyle = 'rgba(255,255,255,.3)';
+  g.stroke(edges);
+  g.lineWidth = 1.6;
+  g.strokeStyle = 'rgba(255,255,255,.6)';
+  g.stroke(lights);
+  const diag = Math.hypot(W, H);
+  for (const [s, p] of running) {
+    g.save();
+    g.beginPath();
+    g.arc(s.hit.x, s.hit.y, diag * (1 - (1 - p) ** 2), 0, TAU);
+    g.clip();
+    const path = new Path2D();
+    trace(path, s.pts);
+    g.lineWidth = 1;
+    g.strokeStyle = 'rgba(255,255,255,.3)';
+    g.stroke(path);
+    g.restore();
+  }
+  if (crackGlitch) {
+    g.save();
+    g.beginPath(); g.rect(0, crackGlitch.y, W, crackGlitch.h); g.clip();
+    g.translate(crackGlitch.dx, 0);
+    g.lineWidth = 1;
+    g.strokeStyle = sproutRgba(crackRgb[1], .9);
+    g.stroke(edges);
+    g.restore();
+  }
+  if (crackPhase === 'growing') {
+    const e = clamp((now - crackPhaseAt) / (1000 / slow), 0, 1);
+    const ix = e * W / 2, iy = e * H / 2;
+    const slab = new Path2D();
+    slab.rect(0, 0, W, H);
+    slab.rect(ix, iy, W - 2 * ix, H - 2 * iy);
+    g.fillStyle = grad;
+    g.fill(slab, 'evenodd');
+    g.lineWidth = 1;
+    g.strokeStyle = 'rgba(255,255,255,.45)';
+    g.strokeRect(ix, iy, W - 2 * ix, H - 2 * iy);
+  }
+  const fall = reduced.matches ? 400 : 1100;
+  crackFalling = crackFalling.filter((f) => now - f.t0 < fall);
+  for (const f of crackFalling) {
+    const t = (now - f.t0) / 1000;
+    const a = Math.max(0, 1 - (now - f.t0) / fall);
+    g.save();
+    g.globalAlpha = a;
+    if (!reduced.matches) {
+      g.translate(f.shard.cx + f.vx * t, f.shard.cy + 700 * t * t);
+      g.rotate(f.rv * t);
+      g.translate(-f.shard.cx, -f.shard.cy);
+    }
+    const path = new Path2D();
+    trace(path, f.shard.pts);
+    g.fillStyle = grad;
+    g.fill(path);
+    g.lineWidth = 1;
+    g.strokeStyle = 'rgba(255,255,255,.4)';
+    g.stroke(path);
+    g.restore();
+  }
+  crackDirty = false;
+}
+function crackTick(now) {
+  crackFrame = 0;
+  if (mode !== 'crack' || document.hidden || !crackFit()) return;
+  const slow = reduced.matches ? 2 : 1;
+  if (crackPhase === 'waiting' && now - crackPhaseAt >= 800 / slow) { crackPhase = 'growing'; crackPhaseAt = now; }
+  else if (crackPhase === 'growing' && now - crackPhaseAt >= 1000 / slow) { crackPhase = 'whole'; crackShards = crackWhole(); crackDirty = true; }
+  if (!reduced.matches && now >= crackGlitchAt) {
+    if (crackGlitch) { crackGlitch = null; crackGlitchAt = now + 3000 + Math.random() * 3500; }
+    else if (crackShards.length) {
+      crackGlitch = { y: Math.random() * crackH, h: 8 + Math.random() * 16, dx: (Math.random() < .5 ? -1 : 1) * (1 + Math.random()) };
+      crackGlitchAt = now;
+    } else crackGlitchAt = now + 3000;
+    crackDirty = true;
+  }
+  const running = crackShards.some((s) => s.hit && now - s.hit.t0 < 250 / slow);
+  if (crackDirty || running || crackFalling.length || crackPhase !== 'whole') crackDraw(now);
+  crackStatus(now);
+  crackFrame = requestAnimationFrame(crackTick);
+}
+function crackKick() {
+  if (crackFrame || mode !== 'crack' || document.hidden) return;
+  crackFrame = requestAnimationFrame(crackTick);
+}
+function crackStop() {
+  cancelAnimationFrame(crackFrame);
+  crackFrame = 0;
+}
+function crackShow() {
+  if (!crackFit()) return;
+  crackDraw(performance.now());
+  crackStatus(performance.now(), true);
+  crackKick();
+}
+crackCv.onpointerdown = (event) => {
+  if (!event.isPrimary || event.button !== 0 || !crackFit()) return;
+  const r = crackCv.getBoundingClientRect();
+  crackHit(event.clientX - r.left, event.clientY - r.top);
+};
+crackCv.onkeydown = (event) => {
+  if (event.key !== 'Enter' && event.key !== ' ') return;
+  event.preventDefault();
+  if (event.repeat || !crackFit()) return;
+  crackHit(crackW * (.08 + Math.random() * .84), crackH * (.08 + Math.random() * .84));
+};
+new ResizeObserver(() => { if (mode === 'crack' && crackFit()) crackDraw(performance.now()); }).observe(crackCv);
+
 const initialMode = read('mode');
 select(Object.hasOwn(modes, initialMode) ? initialMode : 'orbit');
 </script>
