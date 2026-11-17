@@ -1,0 +1,886 @@
+<!doctype html>
+<html lang="uk" data-accent="crimson">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#140509">
+<title>Thumb — вісім занять для одного пальця</title>
+<link rel="icon" href="./favicon.ico?v=8969ec77" sizes="16x16 32x32 48x48">
+<link rel="icon" type="image/png" href="./favicon.png?v=313363b9" sizes="32x32">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png?v=30a44379" sizes="180x180">
+<style>
+/* Source: https://files.mandrock.me/web/mandrock0-tokens.css */
+/*
+ * mandrock0 design tokens — extracted verbatim from 0mandrock1/designClaude
+ * (src/index.css, commit fac28d4). Dark-only: there is no light palette in
+ * this system, :root already holds the dark values, .dark is a no-op alias.
+ * Self-contained: drop into any project, no Tailwind/build step required.
+ */
+
+:root {
+  /* ---- UA theme: tell the browser this is a dark page ----
+     without it iOS Safari treats the page as light: white overscroll,
+     white form controls/scrollbars, light toolbar tint in both modes */
+  color-scheme: dark;
+
+  /* ---- radii ---- */
+  --radius: 0.625rem;
+  --radius-card: 0.25rem;
+  --radius-control: 1rem;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* ---- brand accents (raw) ---- */
+  --accent-purple: oklch(70% .30 320);
+  --accent-cyan: oklch(80% .15 205);
+  --accent-lime: oklch(86% .21 150);
+  --accent-crimson: oklch(60% .23 13);
+  --accent-shader: var(--accent-purple);
+
+  /* ---- role layer (semantic aliases onto the accents) ---- */
+  --action: var(--accent-purple);
+  --info: var(--accent-cyan);
+  --ok: var(--accent-lime);
+  --alive: var(--accent-crimson);
+
+  /* ---- surface / text colors (shadcn semantic layer) ---- */
+  --background: oklch(11% .105 14);
+  --foreground: oklch(96% .035 20);
+  --card: oklch(16.5% .125 12);
+  --card-foreground: var(--foreground);
+  --popover: oklch(16.5% .125 12);
+  --popover-foreground: var(--foreground);
+  --primary: var(--accent-shader);
+  --primary-foreground: oklch(10% .04 356);
+  --secondary: oklch(23.5% .14 12);
+  --secondary-foreground: var(--foreground);
+  --muted: oklch(20% .13 12);
+  --muted-foreground: oklch(70% .095 16);
+  --accent: var(--accent-shader);
+  --accent-foreground: oklch(10% .04 356);
+  --destructive: oklch(70% .18 38);
+
+  /* ---- borders / outlines / focus ring ---- */
+  --border: oklch(33% .16 10 / .55);
+  --input: oklch(33% .16 10 / .7);
+  --ring: var(--accent-shader);
+
+  /* ---- glow / shadow system (one hue, three strengths) ---- */
+  --glow: var(--accent-shader);
+  --glow-ambient: 0 0 0 1px color-mix(in oklch, var(--glow) 14%, transparent);
+  --glow-attention: 0 0 0 1px color-mix(in oklch, var(--glow) 55%, transparent),
+                     0 0 20px color-mix(in oklch, var(--glow) 40%, transparent);
+  --glow-interaction: 0 0 0 1.5px color-mix(in oklch, var(--glow) 85%, transparent),
+                       0 0 28px color-mix(in oklch, var(--glow) 60%, transparent);
+
+  /* ---- chart palette ---- */
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+
+  /* ---- sidebar ---- */
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: var(--accent-shader);
+  --sidebar-primary-foreground: oklch(10% .04 356);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: var(--accent-shader);
+
+  /* ---- typography ---- */
+  --font-sans: 'Geist Variable', sans-serif;
+  --font-heading: var(--font-sans);
+
+  /* ---- motion gate (a11y: prefers-reduced-motion drives this to 0) ---- */
+  --glitch-budget: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --glitch-budget: 0;
+  }
+}
+
+</style>
+<style>
+/* Source: https://tools.mandrock.me/palettes/accents.css */
+/* mandrock0 page accents — рантайм-шар поверх mandrock0-tokens.css
+ * Джерело правди: https://tools.mandrock.me/palettes/palettes.json
+ * Використання:  <html data-accent="lime">
+ *                <link rel="stylesheet" href=".../mandrock0-tokens.css">
+ *                <link rel="stylesheet" href="https://tools.mandrock.me/palettes/accents.css">
+ * Сторінка далі читає лише var(--page-accent) і НЕ називає конкретний колір.
+ */
+:root{ --page-accent: var(--accent-crimson); }
+[data-accent="crimson"]{ --page-accent: var(--accent-crimson); }
+[data-accent="purple"] { --page-accent: var(--accent-purple);  }
+[data-accent="cyan"]   { --page-accent: var(--accent-cyan);    }
+[data-accent="lime"]   { --page-accent: var(--accent-lime);    }
+
+</style>
+<style>
+:root{--ink-1:var(--page-accent,#ef4972);--ink-2:var(--action,#f15abf);--ink-3:var(--info,#4cd1e3);--ink-4:var(--ok,#b8ed87);color-scheme:dark;font-family:system-ui,sans-serif;background:var(--background,#140509);color:var(--foreground,#f8e8ed)}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at 50% 80%,color-mix(in oklch,var(--page-accent,#eb2450) 15%,transparent),transparent 65%);min-height:100dvh}
+button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+button:focus-visible{outline:2px solid var(--info,#51ddf0);outline-offset:3px}
+.shell{min-height:100svh;max-width:540px;margin:auto;padding:max(15px,env(safe-area-inset-top)) 16px max(12px,env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:16px}
+header{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--border,#542531);padding:0 0 10px}
+h1,h2,p{margin:0}
+h1{font-size:clamp(2.25rem,9vw,3.6rem);line-height:.9;font-weight:850;letter-spacing:-.12em;text-transform:uppercase;text-shadow:3px 0 color-mix(in oklch,var(--page-accent,#eb2450) 60%,transparent)}
+header span,.caption,.tabs button,.small,.meter{font-family:ui-monospace,monospace}
+header span,.caption,.muted{color:var(--muted-foreground,#d7a6b4)}
+main{flex:1;display:flex;flex-direction:column;justify-content:flex-end}
+.intro{min-height:75px;display:grid;align-content:end;gap:5px;margin-bottom:14px}
+h2{font-size:clamp(1.6rem,7vw,2.45rem);letter-spacing:-.055em;line-height:1}
+.caption{font-size:.78rem;line-height:1.4}
+.panel{position:relative;isolation:isolate;border:1px solid color-mix(in oklch,var(--page-accent,#eb2450) 42%,var(--background,#140509));min-height:clamp(225px,45vh,425px);display:grid;place-items:center;border-radius:var(--radius-card,4px);overflow:hidden;background:radial-gradient(ellipse at 50% 75%,color-mix(in oklch,var(--page-accent,#eb2450) 16%,var(--background,#140509)),var(--background,#140509) 75%)}
+.panel::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:2;opacity:.25;background:repeating-linear-gradient(0deg,transparent 0 4px,#0009 4px 5px)}
+.panel[hidden],.area[hidden],.caption[hidden]{display:none}
+.area{width:100%;height:100%;min-height:inherit;display:grid;place-items:center;padding:14px}
+.pad{width:100%;height:100%;background:none;border:0;display:grid;place-content:center;justify-items:center;gap:12px;user-select:none}
+.pad:focus-visible{outline-offset:-6px}
+.disc{width:clamp(118px,38vw,184px);aspect-ratio:1;border-radius:50%;display:grid;place-content:center;border:1px solid var(--page-accent,#eb2450);background:radial-gradient(circle,transparent 47%,color-mix(in oklch,var(--page-accent,#eb2450) 12%,transparent) 48% 49%,transparent 50% 65%,color-mix(in oklch,var(--page-accent,#eb2450) 35%,transparent) 66%,transparent 68%);box-shadow:0 0 36px color-mix(in oklch,var(--page-accent,#eb2450) 23%,transparent);font-size:2rem}
+.pad:active .disc,.disc.hit{background-color:color-mix(in oklch,var(--page-accent,#eb2450) 35%,transparent)}
+.meter{font-size:.8rem;font-variant-numeric:tabular-nums}
+.tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.tabs button,.small{min-height:44px;border:1px solid var(--border,#542531);border-radius:var(--radius-card,4px);background:var(--card,#230811);font-size:clamp(.68rem,3.2vw,.82rem);padding:5px 4px}
+.tabs button[aria-current="true"]{border-color:var(--page-accent,#eb2450);background:color-mix(in oklch,var(--page-accent,#eb2450) 22%,var(--background,#140509));box-shadow:inset 0 -2px var(--page-accent,#eb2450)}
+.pointer{touch-action:none;user-select:none;cursor:crosshair}
+.pointer:focus-visible{outline:2px solid var(--info,#51ddf0);outline-offset:-5px}
+.loop-ring{width:clamp(110px,36vw,172px);aspect-ratio:1;border-radius:50%;border:1px dashed var(--page-accent,#eb2450);display:grid;place-items:center;font-size:3.2rem;background:var(--card,#230811);color:var(--foreground,#f8e8ed)}
+.stack{display:grid;justify-items:center;gap:10px;text-align:center}
+.stepper{display:flex;justify-content:center;gap:8px;width:100%;flex-wrap:wrap}
+.stepper button{min-width:53px;padding-inline:12px}
+.number{font-size:clamp(2rem,13vw,4.5rem);line-height:1;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.cell{width:clamp(43px,13vw,58px);aspect-ratio:1;border:1px solid var(--border,#542531);border-radius:4px;background:var(--card,#230811);color:var(--muted-foreground,#d7a6b4)}
+.cell[aria-pressed="true"]{border-color:var(--page-accent,#eb2450);background:color-mix(in oklch,var(--page-accent,#eb2450) 42%,var(--background,#140509));color:var(--foreground,#f8e8ed)}
+.field{position:absolute;inset:0;width:100%;height:100%;display:block}
+#sandShake{position:absolute;z-index:3;right:12px;bottom:10px}
+.overlay{position:absolute;z-index:1;left:14px;bottom:12px;padding:5px 8px;background:var(--background,#140509);border-left:2px solid var(--page-accent,#eb2450);pointer-events:none}
+.ball{position:absolute;top:0;left:0;width:33px;height:33px;border-radius:50%;background:radial-gradient(circle at 34% 26%,var(--foreground,#f8e8ed),var(--page-accent,#eb2450) 30%,var(--background,#140509) 70%);box-shadow:0 0 22px var(--page-accent,#eb2450);pointer-events:none}
+.track{position:absolute;inset:14px;border:1px dashed var(--border,#542531);border-radius:24px;pointer-events:none;background:radial-gradient(circle,color-mix(in oklch,var(--page-accent,#eb2450) 28%,transparent) 1px,transparent 1px) center/14px 14px}
+#cubeMoves{min-height:2lh;max-width:30ch;font:1rem/1.35 ui-monospace,monospace;overflow-wrap:anywhere}
+@media (max-height:600px){.shell{gap:8px}.intro{min-height:0;margin-bottom:8px}.panel{min-height:200px}}
+</style>
+<!-- og:start (managed by og-preview skill) -->
+<meta name="description" content="Keeps the phone hand busy while the rest of you is busy with something else. Eight no-sound, no-attention activities for one thumb: tap a tempo, follow the arrow loop, paint glitches, roll a ball, keep a counter, clear the knot, recall a cube algorithm, pour sand. Mobile-first, no login.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="mandrock tools">
+<meta property="og:title" content="Thumb">
+<meta property="og:description" content="Keeps the phone hand busy while the rest of you is busy with something else. Eight no-sound, no-attention activities for one thumb: tap a tempo, follow the arrow loop, paint glitches, roll a ball, keep a counter, clear the knot, recall a cube algorithm, pour sand. Mobile-first, no login.">
+<meta property="og:url" content="https://thumb.mandrock.me/">
+<meta property="og:image" content="https://thumb.mandrock.me/og.png?v=c14a4f64">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Thumb — mandrock tools">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Thumb">
+<meta name="twitter:description" content="Keeps the phone hand busy while the rest of you is busy with something else. Eight no-sound, no-attention activities for one thumb: tap a tempo, follow the arrow loop, paint glitches, roll a ball, keep a counter, clear the knot, recall a cube algorithm, pour sand. Mobile-first, no login.">
+<meta name="twitter:image" content="https://thumb.mandrock.me/og.png?v=c14a4f64">
+<!-- og:end -->
+</head>
+<body><div class="shell">
+<header><h1>Thumb</h1><span>Без звуку</span></header>
+<main>
+<div class="intro"><h2 id="modeName">Пульс</h2><p id="modeHint" class="caption">Відбивай темп одним пальцем. Після паузи почнеться нова серія.</p></div>
+<section class="panel" id="pulse" aria-labelledby="modeName">
+<button class="pad" id="tap" aria-label="Відбити удар"><span class="disc" id="disc" aria-hidden="true">⊕</span><span class="meter" id="pulseStat">Почни в будь-якому темпі</span></button>
+</section>
+<section class="panel" id="loop" aria-labelledby="modeName" hidden>
+<div class="area pointer" id="loopPad" tabindex="0" aria-label="Поле свайпів. Також працюють стрілки клавіатури."><div class="stack"><span class="loop-ring" id="loopArrow" aria-hidden="true">↑</span><span class="meter" id="loopStat" role="status">Готово кіл: 0</span></div></div>
+</section>
+<section class="panel" id="glitch" aria-labelledby="modeName" hidden>
+<canvas id="glitchPad" class="field pointer" tabindex="0" role="button" aria-label="Випадковий глітч. Enter або пробіл."></canvas>
+<span class="caption overlay" id="glitchStat" role="status">33 ефекти</span>
+</section>
+<section class="panel" id="roll" aria-labelledby="modeName" hidden>
+<div class="field pointer" id="rollPad" tabindex="0" aria-label="Поле кульки. Також працюють стрілки клавіатури."><div class="track"></div><span class="ball" id="ball"></span></div>
+</section>
+<section class="panel" id="count" aria-labelledby="modeName" hidden>
+<div class="area"><div class="stack"><button class="pad" id="increment" aria-label="Додати один"><span class="disc number" id="number" aria-live="polite">0</span></button><div class="stepper"><button class="small" id="decrement" aria-label="Відняти один">−1</button><button class="small" id="resetCount">Скинути</button></div></div></div>
+</section>
+<section class="panel" id="knot" aria-labelledby="modeName" hidden>
+<div class="area"><div class="stack"><div class="grid" id="grid" aria-label="Поле три на три"></div><div class="meter" id="knotStat" role="status"></div><button class="small" id="nextKnot">Інший вузол</button></div></div>
+</section>
+<section class="panel" id="cube" aria-labelledby="modeName" hidden>
+<div class="area"><div class="stack"><strong id="cubeName"></strong><span id="cubeMoves" role="status"></span><div class="stepper"><button class="small" id="cubeReveal">Наступний хід</button><button class="small" id="cubeNext">Інша картка</button></div></div></div>
+</section>
+<section class="panel" id="test" aria-labelledby="modeName" hidden>
+<canvas id="sandPad" class="field pointer" tabindex="0" role="img" aria-label="Пісочниця. Веди пальцем або тримай Enter, щоб сипати пісок."></canvas>
+<span class="caption overlay" id="sandStat">Піщинок: 0</span>
+<button class="small" id="sandShake">Струсити</button>
+</section>
+</main>
+<noscript>Увімкни JavaScript у браузері, щоб запустити гру.</noscript>
+<nav id="tabs" class="tabs" aria-label="Заняття"></nav>
+</div>
+<script>
+'use strict';
+const $ = (id) => document.getElementById(id);
+const modes = {
+  pulse: ['Пульс', 'Відбивай темп одним пальцем. Після паузи почнеться нова серія.'],
+  loop: ['Петля', 'Свайпай за стрілкою: вгору, праворуч, униз, ліворуч. У своєму темпі.'],
+  glitch: ['Глітч', 'Торкнись для нового ефекту. Проведи пальцем, щоб лишити слід.'],
+  roll: ['Перекат', 'Підхопи кульку, проведи й відпусти. Вона покотиться за інерцією.'],
+  count: ['Лічильник', 'Торкнись числа, щоб додати один. Значення лишається між візитами.'],
+  knot: ['Вузол', 'Погаси всі клітинки. Дотик перемикає клітинку та її сусідів по хресту.'],
+  cube: ['Кубик', 'Пригадай алгоритм 3×3 і відкривай по одному ходу.'],
+  test: ['TEST', 'Веди пальцем — сиплеться пісок. Колір міняється шарами, купа лишається між візитами.'],
+};
+function read(key) {
+  try { return localStorage.getItem('thumb.v1.' + key); } catch { return null; }
+}
+function save(key, value) {
+  try { localStorage.setItem('thumb.v1.' + key, value); } catch {}
+}
+function shuffle(items) {
+  const result = [...items];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
+const tabs = Object.entries(modes).map(([id, [name]]) => {
+  const button = document.createElement('button');
+  button.textContent = name;
+  button.setAttribute('aria-controls', id);
+  button.onclick = () => select(id);
+  $('tabs').append(button);
+  return [id, button];
+});
+let mode;
+function select(id) {
+  if (mode === id) return;
+  mode = id;
+  for (const [key, button] of tabs) {
+    $(key).hidden = key !== id;
+    button.setAttribute('aria-current', String(key === id));
+  }
+  [$('modeName').textContent, $('modeHint').textContent] = modes[id];
+  save('mode', id);
+  if (id === 'glitch') paintGlitchField();
+  else if (id === 'roll') placeBall();
+  else if (id === 'test') sandShow();
+}
+
+let lastTap = 0;
+let intervals = [];
+let hitTimer;
+$('tap').onclick = () => {
+  const now = performance.now();
+  const interval = now - lastTap;
+  if (lastTap && interval < 115) return;
+  if (!lastTap || interval > 2200) intervals = [];
+  else intervals = [...intervals.slice(-7), interval];
+  lastTap = now;
+  const average = intervals.reduce((sum, value) => sum + value, 0) / intervals.length;
+  const deviation = intervals.reduce((sum, value) => sum + Math.abs(value - average), 0) / intervals.length;
+  const pace = Math.round(60000 / average);
+  $('pulseStat').textContent = intervals.length >= 3
+    ? pace + ' BPM · відхилення ' + Math.round(deviation) + ' мс'
+    : intervals.length ? pace + ' BPM' : 'Ще один удар';
+  $('disc').classList.add('hit');
+  clearTimeout(hitTimer);
+  hitTimer = setTimeout(() => $('disc').classList.remove('hit'), 110);
+};
+
+const directions = ['ArrowUp', 'ArrowRight', 'ArrowDown', 'ArrowLeft'];
+let step = 0;
+let loops = 0;
+function follow(direction) {
+  if (directions[step] !== direction) return;
+  step = (step + 1) % 4;
+  if (!step) loops++;
+  $('loopArrow').textContent = ['↑', '→', '↓', '←'][step];
+  $('loopStat').textContent = 'Готово кіл: ' + loops;
+}
+let swipe;
+$('loopPad').onpointerdown = (event) => {
+  if (!event.isPrimary || event.button !== 0) return;
+  swipe = { x: event.clientX, y: event.clientY, id: event.pointerId };
+  event.currentTarget.setPointerCapture(event.pointerId);
+};
+$('loopPad').onpointerup = (event) => {
+  if (swipe?.id !== event.pointerId) return;
+  const dx = event.clientX - swipe.x;
+  const dy = event.clientY - swipe.y;
+  swipe = null;
+  if (Math.max(Math.abs(dx), Math.abs(dy)) < 23) return;
+  follow(Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'ArrowRight' : 'ArrowLeft') : (dy > 0 ? 'ArrowDown' : 'ArrowUp'));
+};
+$('loopPad').onlostpointercapture = () => { swipe = null; };
+$('loopPad').onkeydown = (event) => {
+  if (!directions.includes(event.key)) return;
+  event.preventDefault();
+  if (!event.repeat) follow(event.key);
+};
+
+let count = Number(read('count'));
+if (!Number.isSafeInteger(count) || count < 0 || count > 999999) count = 0;
+function updateCount(value) {
+  count = Math.max(0, Math.min(999999, value));
+  $('number').style.fontSize = count >= 1000 ? '2rem' : '';
+  $('number').textContent = count;
+  $('decrement').disabled = count === 0;
+  save('count', count);
+}
+$('increment').onclick = () => updateCount(count + 1);
+$('decrement').onclick = () => updateCount(count - 1);
+$('resetCount').onclick = () => updateCount(0);
+updateCount(count);
+
+const crosses = Array.from({ length: 9 }, (_, i) => Array.from({ length: 9 }, (_, j) => j)
+  .filter((j) => Math.abs(i % 3 - j % 3) + Math.abs(Math.floor(i / 3) - Math.floor(j / 3)) <= 1)
+  .reduce((mask, j) => mask | (1 << j), 0));
+let knot;
+let previousKnot;
+const cells = crosses.map((cross, i) => {
+  const cell = document.createElement('button');
+  cell.className = 'cell';
+  cell.setAttribute('aria-label', 'Рядок ' + (Math.floor(i / 3) + 1) + ', стовпець ' + (i % 3 + 1));
+  cell.onclick = () => { if (knot) { knot ^= cross; showKnot(); } };
+  $('grid').append(cell);
+  return cell;
+});
+function showKnot() {
+  for (const [i, cell] of cells.entries()) {
+    const lit = Boolean(knot & (1 << i));
+    cell.setAttribute('aria-pressed', String(lit));
+    cell.textContent = lit ? '◆' : '·';
+    cell.setAttribute('aria-disabled', String(!knot));
+  }
+  $('knotStat').textContent = knot ? 'Горить: ' + cells.filter((_, i) => knot & (1 << i)).length : 'Розв’язано';
+}
+function newKnot() {
+  const moves = 3 + Math.floor(Math.random() * 3);
+  do { knot = shuffle(crosses).slice(0, moves).reduce((mask, cross) => mask ^ cross, 0); }
+  while (!knot || knot === previousKnot);
+  previousKnot = knot;
+  showKnot();
+}
+$('nextKnot').onclick = newKnot;
+newKnot();
+
+const algorithms = [
+  ['Sune · OLL', "R U R′ U R U2 R′"],
+  ['Anti-Sune · OLL', "R U2 R′ U′ R U′ R′"],
+  ['T-perm · PLL', "R U R′ U′ R′ F R2 U′ R′ U′ R U R′ F′"],
+  ['H-perm · PLL', "M2 U M2 U2 M2 U M2"],
+  ['Ua-perm · PLL', "M2 U M U2 M′ U M2"],
+  ['Ub-perm · PLL', "M2 U′ M U2 M′ U′ M2"],
+];
+let cardIndex = 0;
+let revealed = 0;
+function showCard() {
+  const [name, sequence] = algorithms[cardIndex];
+  const moves = sequence.split(' ');
+  $('cubeName').textContent = name;
+  $('cubeMoves').textContent = revealed ? moves.slice(0, revealed).join(' ') : '· · ·';
+  $('cubeReveal').textContent = revealed === moves.length ? 'Сховати ходи' : 'Наступний хід';
+}
+$('cubeNext').onclick = () => { cardIndex = (cardIndex + 1) % algorithms.length; revealed = 0; showCard(); };
+$('cubeReveal').onclick = () => { revealed = (revealed + 1) % (algorithms[cardIndex][1].split(' ').length + 1); showCard(); };
+showCard();
+
+const ballState = { x: 0, y: 0, vx: 0, vy: 0, id: null, t: 0, frame: 0, offsetX: 0, offsetY: 0, lastMove: 0 };
+const ballPad = $('rollPad');
+const ballRadius = 16.5;
+function clamp(value, low, high) { return Math.max(low, Math.min(high, value)); }
+function drawBall() { $('ball').style.transform = 'translate(' + (ballState.x - ballRadius) + 'px,' + (ballState.y - ballRadius) + 'px)'; }
+function placeBall() {
+  cancelAnimationFrame(ballState.frame);
+  Object.assign(ballState, { x: ballPad.clientWidth / 2, y: ballPad.clientHeight / 2, vx: 0, vy: 0, t: 0 });
+  drawBall();
+}
+function moveBall(x, y) {
+  const state = ballState;
+  state.x = clamp(x, ballRadius, ballPad.clientWidth - ballRadius);
+  state.y = clamp(y, ballRadius, ballPad.clientHeight - ballRadius);
+  drawBall();
+}
+function rollBall(now) {
+  if (mode !== 'roll' || ballState.id !== null) return;
+  const state = ballState;
+  const dt = state.t ? clamp(now - state.t, 1, 33) : 16;
+  state.t = now;
+  const x = state.x + state.vx * dt;
+  const y = state.y + state.vy * dt;
+  if (x < ballRadius || x > ballPad.clientWidth - ballRadius) state.vx *= -.68;
+  if (y < ballRadius || y > ballPad.clientHeight - ballRadius) state.vy *= -.68;
+  moveBall(x, y);
+  const drag = Math.pow(.93, dt / 16);
+  state.vx *= drag;
+  state.vy *= drag;
+  if (Math.hypot(state.vx, state.vy) > .015) state.frame = requestAnimationFrame(rollBall);
+}
+function launchBall(vx, vy) {
+  const state = ballState;
+  cancelAnimationFrame(state.frame);
+  Object.assign(state, { vx, vy, t: 0 });
+  state.frame = requestAnimationFrame(rollBall);
+}
+ballPad.onpointerdown = (event) => {
+  if (!event.isPrimary || event.button !== 0) return;
+  const state = ballState;
+  const bounds = ballPad.getBoundingClientRect();
+  const x = event.clientX - bounds.left;
+  const y = event.clientY - bounds.top;
+  if (Math.hypot(x - state.x, y - state.y) > 39) {
+    launchBall(clamp((x - state.x) / 125, -2, 2), clamp((y - state.y) / 125, -2, 2));
+    return;
+  }
+  cancelAnimationFrame(state.frame);
+  Object.assign(state, { id: event.pointerId, offsetX: state.x - x, offsetY: state.y - y, vx: 0, vy: 0, lastMove: event.timeStamp });
+  ballPad.setPointerCapture(event.pointerId);
+};
+ballPad.onpointermove = (event) => {
+  const state = ballState;
+  if (state.id !== event.pointerId) return;
+  const bounds = ballPad.getBoundingClientRect();
+  const { x, y } = state;
+  moveBall(event.clientX - bounds.left + state.offsetX, event.clientY - bounds.top + state.offsetY);
+  const dt = clamp(event.timeStamp - state.lastMove, 8, 100);
+  state.vx = .35 * state.vx + .65 * clamp((state.x - x) / dt, -2.4, 2.4);
+  state.vy = .35 * state.vy + .65 * clamp((state.y - y) / dt, -2.4, 2.4);
+  state.lastMove = event.timeStamp;
+};
+ballPad.onpointerup = (event) => {
+  const state = ballState;
+  if (state.id !== event.pointerId) return;
+  state.id = null;
+  if (event.timeStamp - state.lastMove < 100) launchBall(state.vx, state.vy);
+};
+ballPad.onlostpointercapture = () => { ballState.id = null; };
+ballPad.onkeydown = (event) => {
+  const index = directions.indexOf(event.key);
+  if (index < 0) return;
+  event.preventDefault();
+  launchBall([0, 1, 0, -1][index], [-1, 0, 1, 0][index]);
+};
+
+const canvas = $('glitchPad');
+const ctx = canvas.getContext('2d');
+const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+const TAU = Math.PI * 2;
+function line(c, ...points) {
+  c.beginPath();
+  c.moveTo(...points[0]);
+  for (const point of points.slice(1)) c.lineTo(...point);
+  c.stroke();
+}
+function ring(c, x, y, radius, from = 0, to = TAU) {
+  c.beginPath();
+  c.arc(x, y, radius, from, to);
+  c.stroke();
+}
+function repeat(n, draw) { for (let i = 0; i < n; i++) draw(i); }
+function polar(a, r) { return [Math.cos(a) * r, Math.sin(a) * r]; }
+function poly(c, sides, size, angle = 0) {
+  const points = Array.from({ length: sides + 1 }, (_, i) => polar(angle + i * TAU / sides, size));
+  line(c, ...points);
+}
+const effects = [
+  ['Розсинхрон', (c, r, t) => repeat(11, (i) => c.fillRect(-r + Math.sin(i * 9 + t * 4) * r * .54, (i - 5) * r / 9, r * (1 + i % 4 / 3), 1 + i % 3))],
+  ['Кільце', (c, r) => repeat(5, (i) => ring(c, 0, 0, r * (.24 + i * .18)))],
+  ['Штрихкод', (c, r, t, s) => repeat(31, (i) => c.fillRect((i / 15 - 1) * r, -r * .52, 1 + ((i + s) * 13 % 5), r * (.7 + i % 5 / 9)))],
+  ['Піксельний дощ', (c, r, t, s) => repeat(25, (i) => c.fillRect(Math.sin(i * 12 + s) * r, (Math.cos(i * 9) + t - .5) * r, 2 + i % 5, 4 + i % 6))],
+  ['Подвійна тінь', (c, r, t) => {
+    c.strokeStyle = ink[2]; c.strokeRect(-r * .67 + t * r * .43, -r * .43, r * 1.1, r * .86);
+    c.strokeStyle = ink[1]; c.strokeRect(-r * .43 - t * r * .43, -r * .43, r * 1.1, r * .86);
+  }],
+  ['Спіраль', (c, r, t) => line(c, ...Array.from({ length: 62 }, (_, i) => polar(i / 3 + t * 2, r * i / 62)))],
+  ['Тріщина', (c, r, t, s) => repeat(8, (i) => {
+    const a = i * .8 + s;
+    line(c, [0, 0], polar(a, r * .34), polar(a + .2, r * .65), polar(a - .1, r));
+    line(c, polar(a + .2, r * .65), polar(a + .45, r * .83));
+  })],
+  ['Горизонт', (c, r, t) => repeat(9, (i) => {
+    const y = r * Math.pow(i / 9, 2);
+    line(c, [-r, y], [r, y]); line(c, [(i - 4) * r / 10, 0], [(i - 4) * r / 4, r]);
+  })],
+  ['Воронка', (c, r, t) => repeat(8, (i) => poly(c, 5, r * (.22 + i * .1), i * .21 + t))],
+  ['Контакт', (c, r) => {
+    repeat(4, (i) => { const a = i * TAU / 4; line(c, polar(a, r * .3), polar(a, r)); });
+    ring(c, 0, 0, r * .36); ring(c, 0, 0, r * .73, .2, 1.4);
+  }],
+  ['Мурахи', (c, r, t, s) => repeat(40, (i) => {
+    const x = Math.sin(i * 17 + s + t * 2) * r;
+    const y = Math.cos(i * 31 + s - t * 3) * r * .75;
+    line(c, [x, y], [x + 3, y - 3]);
+  })],
+  ['Вузол сигналу', (c, r, t) => line(c, ...Array.from({ length: 110 }, (_, i) => {
+    const a = i * TAU / 109;
+    return [r * Math.sin(a * 3 + t * 2), r * .64 * Math.sin(a * 2)];
+  }))],
+  ['Тунель', (c, r, t) => repeat(7, (i) => {
+    const z = ((i + t * 2) % 7 + 1) / 8 * r;
+    c.strokeRect(-z, -.67 * z, z * 2, z * 1.34);
+  })],
+  ['Статика', (c, r, t, s) => repeat(100, (i) => c.fillRect(Math.sin(i * 33 + s) * r, Math.cos(i * 71 + s + t / 8) * r * .65, 1 + i % 3, 1))],
+  ['Пелюстки', (c, r, t) => line(c, ...Array.from({ length: 97 }, (_, i) => {
+    const a = i * TAU / 96;
+    return polar(a + t / 3, Math.sin(a * 5) * r);
+  }))],
+  ['Радар', (c, r, t) => {
+    ring(c, 0, 0, r * .9); ring(c, 0, 0, r * .55);
+    const a = 1 + t * 4;
+    line(c, [0, 0], polar(a, r * .9)); ring(c, 0, 0, r * .84, a - .52, a);
+    c.fillRect(-r * .27, -r * .48, 4, 4);
+  }],
+  ['Квадратний дощ', (c, r, t, s) => repeat(17, (i) => {
+    const d = r * (.07 + i % 4 * .038);
+    c.strokeRect(Math.sin(i * 54 + s) * r, (Math.cos(i * 15) + t - .5) * r * .72, d, d);
+  })],
+  ['Ехо жесту', (c, r, t) => repeat(7, (i) => {
+    const x = (i - 3) * r * .24;
+    ring(c, x, Math.sin(i * .61 + t) * .6 * r, r * .16, .35, 5.2);
+  })],
+  ['Діагональний зсув', (c, r, t) => repeat(13, (i) => {
+    const x = (i - 6) * r * .11;
+    line(c, [x - r * .6, r * .72], [x + r * .1, -r * .08], [x + r * .4 + Math.sin(i + t * 3) * r * .1, -r * .74]);
+  })],
+  ['Нульовий кадр', (c, r, t, s) => {
+    c.font = Math.round(r * .34) + 'px monospace';
+    c.textAlign = 'center';
+    c.fillText('0x' + s.toString(16).toUpperCase(), 0, r * .13);
+    line(c, [-r, r * .27], [r, r * .27]);
+  }],
+  ['Блоки пам’яті', (c, r, t, s) => repeat(48, (i) => {
+    if ((i * 13 + s) % 11 < 4) return;
+    const d = r / 5;
+    c.fillRect((i % 8 - 4) * d, (Math.floor(i / 8) - 3) * d, d * .82, d * .82);
+  })],
+  ['Жалюзі', (c, r, t) => repeat(9, (i) => {
+    const x = -r + (i % 2 ? t : -t) * r * .26;
+    c.strokeRect(x, (i - 4) * r * .15, 2 * r, r * .085);
+  })],
+  ['Передача', (c, r, t) => repeat(6, (i) => ring(c, 0, r * .55, r * (.19 + i * .15), TAU * .62 + t * .13, TAU * .88 - t * .13))],
+  ['Супутник', (c, r, t) => {
+    c.beginPath(); c.ellipse(0, 0, r, r * .34, -.53, 0, TAU); c.stroke();
+    ring(c, 0, 0, r * .22);
+    const a = t * 5;
+    ring(c, Math.cos(a) * r * .77, -Math.cos(a) * r * .44 + Math.sin(a) * r * .31, r * .075);
+  }],
+  ['Заломлення', (c, r, t) => repeat(8, (i) => {
+    const y = (i - 4) * r * .15;
+    line(c, [-r, y], [-r * .37, y], [r * .29, y - r * .15 * Math.sin(t + i * .35)], [r, y + r * .22]);
+  })],
+  ['Блискавка', (c, r, t, s) => {
+    const points = Array.from({ length: 11 }, (_, i) => [Math.sin(i * 3 + s) * r * .27, (i / 5 - 1) * r]);
+    line(c, ...points);
+    line(c, points[3], [-r * .58, -r * .21], [-r * .77, r * .16]);
+    line(c, points[6], [r * .58, r * .26], [r * .75, r * .63]);
+  }],
+  ['Відбиток', (c, r, t) => repeat(9, (i) => {
+    c.beginPath(); c.ellipse(0, 0, r * (.15 + i * .066), r * (.21 + i * .079), .31, .17 + i * .11, TAU - i * .13); c.stroke();
+  })],
+  ['Зоряний слід', (c, r, t, s) => repeat(20, (i) => {
+    const a = i * 2.399 + s;
+    const z = r * (.18 + (i * 13 % 17) / 20);
+    line(c, polar(a, z * .49), polar(a, z * (1 + t * .31)));
+  })],
+  ['Кристал', (c, r, t) => {
+    const corners = Array.from({ length: 6 }, (_, i) => polar(i * TAU / 6 + t / 2, r * .83));
+    line(c, ...corners, corners[0]);
+    repeat(3, (i) => line(c, corners[i], [0, 0], corners[i + 3]));
+    poly(c, 6, r * .43, t / 2);
+  }],
+  ['Біти', (c, r, t, s) => {
+    c.font = Math.round(r * .19) + 'px monospace';
+    c.textAlign = 'center';
+    repeat(5, (i) => {
+      const word = Array.from({ length: 9 }, (_, j) => (((s + i * 71 + j * 13) >> (j % 6)) & 1)).join(' ');
+      c.fillText(word, Math.sin(i + t) * r * .12, (i - 2) * r * .24);
+    });
+  }],
+  ['Зіпсована осцилограма', (c, r, t, s) => line(c, ...Array.from({ length: 57 }, (_, i) => {
+    const x = (i / 28 - 1) * r;
+    return [x, Math.sin(i * .47 - t * 3) * r * .72 * Math.exp(-Math.pow(x / r * 1.7, 2)) + (i % 9 === s % 9 ? r * .25 : 0)];
+  }))],
+  ['Дюни', (c, r, t) => repeat(10, (j) => line(c, ...Array.from({ length: 29 }, (_, i) => {
+    const x = i / 14 - 1;
+    return [x * r, (j / 11 - .42 + .16 * Math.cos(x * 4 + j * .5 + t)) * r];
+  })))],
+  ['Шаховий збій', (c, r, t) => repeat(64, (i) => {
+    const x = i % 8;
+    const y = Math.floor(i / 8);
+    if ((x + y) % 2) c.fillRect((x - 4 + Math.sin(y + t * 3) * .9) * r / 4, (y - 4) * r / 4, r * .20, r * .20);
+  })],
+];
+const ink = [1, 2, 3, 4].map((index) => getComputedStyle(document.documentElement).getPropertyValue('--ink-' + index).trim());
+let deck = [];
+let previousEffect = -1;
+function nextEffect() {
+  if (!deck.length) {
+    deck = shuffle(effects.map((_, i) => i));
+    if (deck.at(-1) === previousEffect) [deck[0], deck[deck.length - 1]] = [deck.at(-1), deck[0]];
+  }
+  previousEffect = deck.pop();
+  return previousEffect;
+}
+let glitchFrame = 0;
+let gesture = null;
+let marks = [];
+let fieldWidth = 0;
+let fieldHeight = 0;
+let pixelRatio = 0;
+function fitGlitch() {
+  const width = canvas.clientWidth;
+  const height = canvas.clientHeight;
+  const ratio = Math.min(window.devicePixelRatio || 1, 2);
+  if (width === fieldWidth && height === fieldHeight && ratio === pixelRatio) return;
+  fieldWidth = width;
+  fieldHeight = height;
+  pixelRatio = ratio;
+  canvas.width = Math.round(width * ratio);
+  canvas.height = Math.round(height * ratio);
+  ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+}
+function paintGlitchField() {
+  if (mode !== 'glitch') return;
+  fitGlitch();
+  ctx.clearRect(0, 0, fieldWidth, fieldHeight);
+  ctx.lineWidth = 1;
+  ctx.strokeStyle = 'rgba(239,73,114,.22)';
+  const x = fieldWidth / 2;
+  const y = fieldHeight / 2;
+  ring(ctx, x, y, 43, .22, 2.81);
+  ring(ctx, x, y, 43, 3.35, 6.06);
+  line(ctx, [x - 9, y], [x + 9, y]);
+  line(ctx, [x, y - 9], [x, y + 9]);
+  for (let i = 18; i < fieldWidth; i += 18) {
+    for (let j = 18; j < fieldHeight; j += 18) ctx.strokeRect(i, j, .6, .6);
+  }
+}
+function showGlitch(now) {
+  glitchFrame = 0;
+  if (mode !== 'glitch') { marks = []; return; }
+  paintGlitchField();
+  marks = marks.filter((mark) => reduced.matches || now - mark.at < 1150);
+  for (const mark of marks) {
+    const t = reduced.matches ? .15 : clamp((now - mark.at) / 1150, 0, 1);
+    ctx.save();
+    ctx.translate(mark.x * fieldWidth, mark.y * fieldHeight);
+    ctx.rotate(mark.rotation);
+    ctx.lineWidth = 1.4;
+    ctx.globalAlpha = (1 - t) * mark.alpha;
+    ctx.strokeStyle = ctx.fillStyle = ink[mark.index % ink.length];
+    effects[mark.index][1](ctx, mark.scale * (1 + t * .36), t, mark.seed);
+    ctx.restore();
+  }
+  if (marks.length && !reduced.matches) glitchFrame = requestAnimationFrame(showGlitch);
+}
+function addMark(x, y, index, trail) {
+  fitGlitch();
+  if (!fieldWidth || !fieldHeight) return;
+  if (reduced.matches) marks = [];
+  marks = [...marks.slice(-9), {
+    x: clamp(x / fieldWidth, .04, .96),
+    y: clamp(y / fieldHeight, .04, .96),
+    index,
+    at: performance.now(),
+    seed: Math.floor(Math.random() * 4096),
+    rotation: trail ? (Math.random() - .5) * .4 : 0,
+    scale: Math.min(fieldWidth, fieldHeight) * (trail ? .14 : .32),
+    alpha: trail ? .54 : .9,
+  }];
+  if (!glitchFrame) glitchFrame = requestAnimationFrame(showGlitch);
+}
+function triggerGlitch(x, y) {
+  const index = nextEffect();
+  $('glitchStat').textContent = effects[index][0];
+  addMark(x, y, index, false);
+  return index;
+}
+canvas.onpointerdown = (event) => {
+  if (!event.isPrimary || event.button !== 0) return;
+  const rect = canvas.getBoundingClientRect();
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
+  gesture = { id: event.pointerId, x, y, index: triggerGlitch(x, y) };
+  canvas.setPointerCapture(event.pointerId);
+};
+canvas.onpointermove = (event) => {
+  if (gesture?.id !== event.pointerId) return;
+  const rect = canvas.getBoundingClientRect();
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
+  if (Math.hypot(x - gesture.x, y - gesture.y) < 19) return;
+  Object.assign(gesture, { x, y });
+  addMark(x, y, gesture.index, true);
+};
+canvas.onlostpointercapture = () => { gesture = null; };
+canvas.onkeydown = (event) => {
+  if (event.key !== 'Enter' && event.key !== ' ') return;
+  event.preventDefault();
+  if (!event.repeat) triggerGlitch(canvas.clientWidth / 2, canvas.clientHeight / 2);
+};
+new ResizeObserver(() => {
+  if (mode === 'glitch') {
+    if (reduced.matches && marks.length) showGlitch(performance.now());
+    else if (!glitchFrame) paintGlitchField();
+  } else if (mode === 'roll') moveBall(ballState.x, ballState.y);
+}).observe($('pulse').parentElement);
+
+const sandCv = $('sandPad');
+const sandCtx = sandCv.getContext('2d');
+const SW = 60;
+const sandFallback = [[239, 73, 114], [241, 90, 191], [76, 209, 227], [184, 237, 135]];
+let SH = 0, sandCells = null, sandBuf = null, sandImg = null, sandRgb = null;
+let sandFrame = 0, sandPour = null, sandLayer = 0, sandPoured = 0, sandFlip = false;
+function sandColors() {
+  try {
+    const probe = document.createElement('span');
+    const pc = document.createElement('canvas');
+    pc.width = pc.height = 1;
+    const p = pc.getContext('2d', { willReadFrequently: true });
+    document.body.append(probe);
+    const out = [1, 2, 3, 4].map((n, i) => {
+      probe.style.color = `var(--ink-${n})`;
+      p.clearRect(0, 0, 1, 1);
+      p.fillStyle = '#000';
+      p.fillStyle = getComputedStyle(probe).color;
+      p.fillRect(0, 0, 1, 1);
+      const d = p.getImageData(0, 0, 1, 1).data;
+      return d[3] ? [d[0], d[1], d[2]] : sandFallback[i];
+    });
+    probe.remove();
+    return out;
+  } catch { return sandFallback; }
+}
+function sandInit() {
+  const w = sandCv.clientWidth, h = sandCv.clientHeight;
+  if (!w || !h) return false;
+  if (!sandCells) {
+    let saved = null;
+    try { saved = JSON.parse(read('sand') || 'null'); } catch {}
+    const ok = saved && saved.w === SW && saved.d && saved.d.length === SW * saved.h;
+    SH = ok ? saved.h : clamp(Math.round(SW * h / w), 40, 160);
+    sandCells = new Uint8Array(SW * SH);
+    if (ok) {
+      for (let i = 0; i < saved.d.length; i++) sandCells[i] = clamp(saved.d.charCodeAt(i) - 48, 0, 4);
+      sandLayer = saved.l | 0;
+    }
+    sandBuf = document.createElement('canvas');
+    sandBuf.width = SW;
+    sandBuf.height = SH;
+    sandImg = sandBuf.getContext('2d').createImageData(SW, SH);
+    sandRgb = sandColors();
+  }
+  const ratio = devicePixelRatio || 1;
+  const cw = Math.round(w * ratio), ch = Math.round(h * ratio);
+  if (sandCv.width !== cw || sandCv.height !== ch) { sandCv.width = cw; sandCv.height = ch; }
+  return true;
+}
+function sandStep() {
+  let moved = 0;
+  sandFlip = !sandFlip;
+  for (let y = SH - 2; y >= 0; y--) {
+    for (let k = 0; k < SW; k++) {
+      const x = sandFlip ? k : SW - 1 - k;
+      const i = y * SW + x, c = sandCells[i];
+      if (!c) continue;
+      const b = i + SW;
+      if (!sandCells[b]) { sandCells[b] = c; sandCells[i] = 0; moved++; continue; }
+      const dir = Math.random() < .5 ? -1 : 1;
+      for (const dx of [dir, -dir]) {
+        const nx = x + dx;
+        if (nx < 0 || nx >= SW) continue;
+        if (!sandCells[b + dx] && !sandCells[i + dx]) { sandCells[b + dx] = c; sandCells[i] = 0; moved++; break; }
+      }
+    }
+  }
+  return moved;
+}
+function sandAdd() {
+  if (!sandPour) return;
+  const cx = Math.floor(sandPour.x * SW), cy = Math.floor(sandPour.y * SH);
+  const color = 1 + (sandLayer % 4);
+  for (let n = 0; n < 3; n++) {
+    const x = clamp(cx + Math.round((Math.random() - .5) * 4), 0, SW - 1);
+    const y = clamp(cy + Math.round((Math.random() - .5) * 2), 0, SH - 1);
+    const i = y * SW + x;
+    if (!sandCells[i]) { sandCells[i] = color; sandPoured++; }
+  }
+  if (sandPoured >= 160) { sandPoured = 0; sandLayer++; }
+}
+function sandDraw() {
+  const d = sandImg.data;
+  let count = 0;
+  for (let i = 0; i < sandCells.length; i++) {
+    const c = sandCells[i], o = i * 4;
+    if (!c) { d[o + 3] = 0; continue; }
+    const rgb = sandRgb[c - 1], shade = ((i * 2654435761) >>> 28) * 3;
+    d[o] = Math.max(0, rgb[0] - shade);
+    d[o + 1] = Math.max(0, rgb[1] - shade);
+    d[o + 2] = Math.max(0, rgb[2] - shade);
+    d[o + 3] = 255;
+    count++;
+  }
+  sandBuf.getContext('2d').putImageData(sandImg, 0, 0);
+  sandCtx.imageSmoothingEnabled = false;
+  sandCtx.clearRect(0, 0, sandCv.width, sandCv.height);
+  sandCtx.drawImage(sandBuf, 0, 0, sandCv.width, sandCv.height);
+  $('sandStat').textContent = `Піщинок: ${count}`;
+}
+function sandSave() {
+  let s = '';
+  for (const c of sandCells) s += String.fromCharCode(48 + c);
+  save('sand', JSON.stringify({ w: SW, h: SH, l: sandLayer, d: s }));
+}
+function sandTick() {
+  sandFrame = 0;
+  if (mode !== 'test' || !sandInit()) return;
+  sandAdd();
+  let moved = 0;
+  const steps = reduced.matches ? SH : 2;
+  for (let s = 0; s < steps; s++) { moved = sandStep(); if (!moved) break; }
+  sandDraw();
+  if (moved || sandPour) sandFrame = requestAnimationFrame(sandTick);
+  else sandSave();
+}
+function sandKick() { if (!sandFrame) sandFrame = requestAnimationFrame(sandTick); }
+function sandShow() { if (sandInit()) { sandDraw(); sandKick(); } }
+function sandAt(event) {
+  const r = sandCv.getBoundingClientRect();
+  return { x: clamp((event.clientX - r.left) / r.width, 0, .999), y: clamp((event.clientY - r.top) / r.height, 0, .999) };
+}
+sandCv.onpointerdown = (event) => {
+  if (!event.isPrimary || event.button !== 0 || !sandInit()) return;
+  sandPour = { id: event.pointerId, ...sandAt(event) };
+  sandCv.setPointerCapture(event.pointerId);
+  sandKick();
+};
+sandCv.onpointermove = (event) => { if (sandPour?.id === event.pointerId) Object.assign(sandPour, sandAt(event)); };
+sandCv.onlostpointercapture = () => { sandPour = null; };
+sandCv.onkeydown = (event) => {
+  if (event.key !== 'Enter' && event.key !== ' ') return;
+  event.preventDefault();
+  if (!sandInit()) return;
+  sandPour = { id: 'key', x: .5, y: .05 };
+  sandKick();
+};
+sandCv.onkeyup = () => { if (sandPour?.id === 'key') sandPour = null; };
+$('sandShake').onclick = () => {
+  if (!sandInit()) return;
+  for (let i = 0; i < sandCells.length; i++) if (sandCells[i] && Math.random() < .5) sandCells[i] = 0;
+  sandKick();
+};
+new ResizeObserver(() => { if (mode === 'test' && sandInit()) sandDraw(); }).observe(sandCv);
+const initialMode = read('mode');
+select(Object.hasOwn(modes, initialMode) ? initialMode : 'pulse');
+</script>
+</body>
+</html>
