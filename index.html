@@ -166,6 +166,8 @@ h2{font-size:clamp(1.6rem,7vw,2.45rem);letter-spacing:-.055em;line-height:1}
 .cell[aria-pressed="true"]{border-color:var(--page-accent,#eb2450);background:color-mix(in oklch,var(--page-accent,#eb2450) 42%,var(--background,#140509));color:var(--foreground,#f8e8ed)}
 .field{position:absolute;inset:0;width:100%;height:100%;display:block}
 #sandShake{position:absolute;z-index:3;right:12px;bottom:10px}
+.gyro-toggle{position:absolute;z-index:3;right:12px;top:10px;min-width:110px}
+.gyro-toggle[aria-pressed="true"]{border-color:var(--page-accent,#eb2450);color:var(--foreground,#fff);background:color-mix(in oklch,var(--page-accent,#eb2450) 30%,var(--card,#230811))}
 .overlay{position:absolute;z-index:1;left:14px;bottom:12px;padding:5px 8px;background:var(--background,#140509);border-left:2px solid var(--page-accent,#eb2450);pointer-events:none}
 .ball{position:absolute;top:0;left:0;width:33px;height:33px;border-radius:50%;background:radial-gradient(circle at 34% 26%,var(--foreground,#f8e8ed),var(--page-accent,#eb2450) 30%,var(--background,#140509) 70%);box-shadow:0 0 22px var(--page-accent,#eb2450);pointer-events:none}
 .track{position:absolute;inset:14px;border:1px dashed var(--border,#542531);border-radius:24px;pointer-events:none;background:radial-gradient(circle,color-mix(in oklch,var(--page-accent,#eb2450) 28%,transparent) 1px,transparent 1px) center/14px 14px}
@@ -206,6 +208,7 @@ h2{font-size:clamp(1.6rem,7vw,2.45rem);letter-spacing:-.055em;line-height:1}
 </section>
 <section class="panel" id="roll" aria-labelledby="modeName" hidden>
 <div class="field pointer" id="rollPad" tabindex="0" aria-label="Поле кульки. Також працюють стрілки клавіатури."><div class="track"></div><span class="ball" id="ball"></span></div>
+<button class="small gyro-toggle" id="rollGyro" aria-pressed="false">Гіроскоп</button>
 </section>
 <section class="panel" id="count" aria-labelledby="modeName" hidden>
 <div class="area"><div class="stack"><button class="pad" id="increment" aria-label="Додати один"><span class="disc number" id="number" aria-live="polite">0</span></button><div class="stepper"><button class="small" id="decrement" aria-label="Відняти один">−1</button><button class="small" id="resetCount">Скинути</button></div></div></div>
@@ -219,6 +222,7 @@ h2{font-size:clamp(1.6rem,7vw,2.45rem);letter-spacing:-.055em;line-height:1}
 <section class="panel" id="test" aria-labelledby="modeName" hidden>
 <canvas id="sandPad" class="field pointer" tabindex="0" role="img" aria-label="Пісочниця. Веди пальцем або тримай Enter, щоб сипати пісок."></canvas>
 <span class="caption overlay" id="sandStat">Піщинок: 0</span>
+<button class="small gyro-toggle" id="sandGyro" aria-pressed="false">Гіроскоп</button>
 <button class="small" id="sandShake">Струсити</button>
 </section>
 </main>
@@ -236,7 +240,7 @@ const modes = {
   count: ['Лічильник', 'Торкнись числа, щоб додати один. Значення лишається між візитами.'],
   knot: ['Вузол', 'Погаси всі клітинки. Дотик перемикає клітинку та її сусідів по хресту.'],
   cube: ['Кубик', 'Пригадай алгоритм 3×3 і відкривай по одному ходу.'],
-  test: ['TEST', 'Веди пальцем — сиплеться пісок. Колір міняється шарами, купа лишається між візитами.'],
+  test: ['Пісок', 'Сип пісок пальцем. Кожен новий дотик змінює колір; гіроскоп дає керувати нахилом.'],
 };
 function read(key) {
   try { return localStorage.getItem('thumb.v1.' + key); } catch { return null; }
@@ -263,6 +267,7 @@ const tabs = Object.entries(modes).map(([id, [name]]) => {
 let mode;
 function select(id) {
   if (mode === id) return;
+  if (mode === 'test' && sandCells) sandSave();
   mode = id;
   for (const [key, button] of tabs) {
     $(key).hidden = key !== id;
@@ -271,7 +276,7 @@ function select(id) {
   [$('modeName').textContent, $('modeHint').textContent] = modes[id];
   save('mode', id);
   if (id === 'glitch') paintGlitchField();
-  else if (id === 'roll') placeBall();
+  else if (id === 'roll') { placeBall(); if (gyroEnabled) launchBall(0, 0); }
   else if (id === 'test') sandShow();
 }
 
@@ -415,6 +420,9 @@ function rollBall(now) {
   const state = ballState;
   const dt = state.t ? clamp(now - state.t, 1, 33) : 16;
   state.t = now;
+  if (gyroEnabled) { state.vx += gravity.x * dt * .0018; state.vy += gravity.y * dt * .0018; }
+  state.vx = clamp(state.vx, -2.7, 2.7);
+  state.vy = clamp(state.vy, -2.7, 2.7);
   const x = state.x + state.vx * dt;
   const y = state.y + state.vy * dt;
   if (x < ballRadius || x > ballPad.clientWidth - ballRadius) state.vx *= -.68;
@@ -423,7 +431,7 @@ function rollBall(now) {
   const drag = Math.pow(.93, dt / 16);
   state.vx *= drag;
   state.vy *= drag;
-  if (Math.hypot(state.vx, state.vy) > .015) state.frame = requestAnimationFrame(rollBall);
+  if (gyroEnabled || Math.hypot(state.vx, state.vy) > .015) state.frame = requestAnimationFrame(rollBall);
 }
 function launchBall(vx, vy) {
   const state = ballState;
@@ -873,7 +881,57 @@ const sandCtx = sandCv.getContext('2d');
 const SW = 60;
 const sandFallback = [[239, 73, 114], [241, 90, 191], [76, 209, 227], [184, 237, 135]];
 let SH = 0, sandCells = null, sandBuf = null, sandImg = null, sandRgb = null;
-let sandFrame = 0, sandPour = null, sandLayer = 0, sandPoured = 0, sandFlip = false;
+let sandFrame = 0, sandPour = null, sandLayer = 0, sandFlip = false;
+let gyroEnabled = false;
+const gravity = { x: 0, y: 1 };
+function updateGyroUI() {
+  for (const id of ['rollGyro', 'sandGyro']) {
+    const button = $(id);
+    button.setAttribute('aria-pressed', String(gyroEnabled));
+    button.textContent = gyroEnabled ? 'Гіроскоп ✓' : 'Гіроскоп';
+  }
+}
+function onOrientation(event) {
+  if (!gyroEnabled || !Number.isFinite(event.beta) || !Number.isFinite(event.gamma)) return;
+  const angle = screen.orientation?.angle ?? window.orientation ?? 0;
+  const gx = clamp(event.gamma / 35, -1, 1);
+  const gy = clamp(event.beta / 45, -1, 1);
+  const radians = angle * Math.PI / 180;
+  gravity.x = clamp(gx * Math.cos(radians) - gy * Math.sin(radians), -1, 1);
+  gravity.y = clamp(gx * Math.sin(radians) + gy * Math.cos(radians), -1, 1);
+  if (mode === 'roll' && !ballState.frame && ballState.id === null) launchBall(0, 0);
+  if (mode === 'test') sandKick();
+}
+async function toggleGyro() {
+  if (gyroEnabled) {
+    gyroEnabled = false;
+    window.removeEventListener('deviceorientation', onOrientation);
+    gravity.x = 0; gravity.y = 1;
+    updateGyroUI();
+    if (mode === 'test') sandKick();
+    return;
+  }
+  if (typeof DeviceOrientationEvent === 'undefined') {
+    alert('Цей браузер не підтримує датчики нахилу.');
+    return;
+  }
+  try {
+    if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+      const permission = await DeviceOrientationEvent.requestPermission();
+      if (permission !== 'granted') return;
+    }
+    gyroEnabled = true;
+    gravity.x = 0; gravity.y = 1;
+    window.addEventListener('deviceorientation', onOrientation);
+    updateGyroUI();
+    if (mode === 'roll') launchBall(0, 0);
+    if (mode === 'test') sandKick();
+  } catch {
+    alert('Не вдалося отримати доступ до датчиків нахилу.');
+  }
+}
+$('rollGyro').onclick = toggleGyro;
+$('sandGyro').onclick = toggleGyro;
 function sandColors() {
   try {
     const probe = document.createElement('span');
@@ -921,18 +979,33 @@ function sandInit() {
 function sandStep() {
   let moved = 0;
   sandFlip = !sandFlip;
-  for (let y = SH - 2; y >= 0; y--) {
-    for (let k = 0; k < SW; k++) {
-      const x = sandFlip ? k : SW - 1 - k;
-      const i = y * SW + x, c = sandCells[i];
-      if (!c) continue;
-      const b = i + SW;
-      if (!sandCells[b]) { sandCells[b] = c; sandCells[i] = 0; moved++; continue; }
-      const dir = Math.random() < .5 ? -1 : 1;
-      for (const dx of [dir, -dir]) {
-        const nx = x + dx;
-        if (nx < 0 || nx >= SW) continue;
-        if (!sandCells[b + dx] && !sandCells[i + dx]) { sandCells[b + dx] = c; sandCells[i] = 0; moved++; break; }
+  const gx = gyroEnabled ? gravity.x : 0;
+  const gy = gyroEnabled ? gravity.y : 1;
+  const horizontal = Math.abs(gx) > Math.abs(gy);
+  const dx = horizontal ? Math.sign(gx) : 0;
+  const dy = horizontal ? 0 : (Math.sign(gy) || 1);
+  const width = SW, height = SH;
+  // Traverse from the leading edge so each grain moves at most once per step.
+  const total = width * height;
+  for (let n = 0; n < total; n++) {
+    const row = Math.floor(n / width), col = n % width;
+    const x = horizontal ? (dx > 0 ? width - 1 - col : col) : (sandFlip ? col : width - 1 - col);
+    const y = horizontal ? (sandFlip ? row : height - 1 - row) : (dy > 0 ? height - 1 - row : row);
+    const i = y * width + x, c = sandCells[i];
+    if (!c) continue;
+    const nx = x + dx, ny = y + dy;
+    if (nx >= 0 && nx < width && ny >= 0 && ny < height && !sandCells[ny * width + nx]) {
+      sandCells[ny * width + nx] = c; sandCells[i] = 0; moved++; continue;
+    }
+    const sign = Math.random() < .5 ? -1 : 1;
+    for (const side of [sign, -sign]) {
+      const sx = horizontal ? nx : x + side;
+      const sy = horizontal ? y + side : ny;
+      const shoulderX = horizontal ? x : sx;
+      const shoulderY = horizontal ? sy : y;
+      if (sx < 0 || sx >= width || sy < 0 || sy >= height || shoulderX < 0 || shoulderX >= width || shoulderY < 0 || shoulderY >= height) continue;
+      if (!sandCells[sy * width + sx] && !sandCells[shoulderY * width + shoulderX]) {
+        sandCells[sy * width + sx] = c; sandCells[i] = 0; moved++; break;
       }
     }
   }
@@ -946,9 +1019,8 @@ function sandAdd() {
     const x = clamp(cx + Math.round((Math.random() - .5) * 4), 0, SW - 1);
     const y = clamp(cy + Math.round((Math.random() - .5) * 2), 0, SH - 1);
     const i = y * SW + x;
-    if (!sandCells[i]) { sandCells[i] = color; sandPoured++; }
+    if (!sandCells[i]) { sandCells[i] = color; }
   }
-  if (sandPoured >= 160) { sandPoured = 0; sandLayer++; }
 }
 function sandDraw() {
   const d = sandImg.data;
@@ -982,7 +1054,7 @@ function sandTick() {
   const steps = reduced.matches ? SH : 2;
   for (let s = 0; s < steps; s++) { moved = sandStep(); if (!moved) break; }
   sandDraw();
-  if (moved || sandPour) sandFrame = requestAnimationFrame(sandTick);
+  if (moved || sandPour || gyroEnabled) sandFrame = requestAnimationFrame(sandTick);
   else sandSave();
 }
 function sandKick() { if (!sandFrame) sandFrame = requestAnimationFrame(sandTick); }
@@ -993,6 +1065,7 @@ function sandAt(event) {
 }
 sandCv.onpointerdown = (event) => {
   if (!event.isPrimary || event.button !== 0 || !sandInit()) return;
+  sandLayer = (sandLayer + 1) % 4;
   sandPour = { id: event.pointerId, ...sandAt(event) };
   sandCv.setPointerCapture(event.pointerId);
   sandKick();
@@ -1003,6 +1076,8 @@ sandCv.onkeydown = (event) => {
   if (event.key !== 'Enter' && event.key !== ' ') return;
   event.preventDefault();
   if (!sandInit()) return;
+  if (sandPour?.id === 'key') return;
+  sandLayer = (sandLayer + 1) % 4;
   sandPour = { id: 'key', x: .5, y: .05 };
   sandKick();
 };
@@ -1013,6 +1088,7 @@ $('sandShake').onclick = () => {
   sandKick();
 };
 new ResizeObserver(() => { if (mode === 'test' && sandInit()) sandDraw(); }).observe(sandCv);
+window.addEventListener('pagehide', () => { if (sandCells) sandSave(); });
 const initialMode = read('mode');
 select(Object.hasOwn(modes, initialMode) ? initialMode : 'pulse');
 </script>
