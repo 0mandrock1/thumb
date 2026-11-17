@@ -202,7 +202,7 @@ h2{font-size:clamp(1.6rem,7vw,2.45rem);letter-spacing:-.055em;line-height:1}
 </section>
 <section class="panel" id="glitch" aria-labelledby="modeName" hidden>
 <canvas id="glitchPad" class="field pointer" tabindex="0" role="button" aria-label="Випадковий глітч. Enter або пробіл."></canvas>
-<span class="caption overlay" id="glitchStat" role="status">33 ефекти</span>
+<span class="caption overlay" id="glitchStat" role="status">200 ефектів</span>
 </section>
 <section class="panel" id="roll" aria-labelledby="modeName" hidden>
 <div class="field pointer" id="rollPad" tabindex="0" aria-label="Поле кульки. Також працюють стрілки клавіатури."><div class="track"></div><span class="ball" id="ball"></span></div>
@@ -619,6 +619,140 @@ const effects = [
     if ((x + y) % 2) c.fillRect((x - 4 + Math.sin(y + t * 3) * .9) * r / 4, (y - 4) * r / 4, r * .20, r * .20);
   })],
 ];
+// These presets vary geometry and motion within each drawing, independently of colour.
+const glitchPresets = [
+  'Моно', 'Скос', 'Пульсація', 'Гребінь', 'Згін', 'Зустріч',
+  'Залом', 'Тремор', 'Відлуння', 'Кручення', 'Провал', 'Перевантаження',
+];
+const glitchFamilies = [
+  ['Рвані рядки', (c, n, t, s) => repeat(6 + n, (i) => {
+    const y = (i / (5 + n) - .5) * 1.65;
+    const cut = Math.sin(i * 2.39 + t * 5 + s) * (.2 + n * .025);
+    const split = .1 + Math.sin(i * .9 + n) * .07;
+    c.fillRect(-.92 + cut, y, .78 + cut * .3, .016 + i % 3 * .013);
+    c.fillRect(cut + split, y, .65 - cut * .3, .018);
+  })],
+  ['Шина даних', (c, n, t, s) => repeat(3 + n, (i) => {
+    const x = (i / (2 + n) - .5) * 1.64;
+    const y = Math.cos(i * 2.1 + s) * .33;
+    const d = (i % 2 ? 1 : -1) * (.1 + (n % 5) * .035);
+    line(c, [x, -.85], [x, y], [x + d, y + .12], [x + d, .72]);
+    const signal = ((i * .13 + t * (1 + n * .11)) % 1) * 1.46 - .77;
+    c.fillRect((signal < y ? x : x + d) - .018, signal, .036, .08);
+  })],
+  ['Оптична ґратка', (c, n, t) => {
+    const size = 4 + n;
+    repeat(size, (i) => {
+      const d = (i / (size - 1) - .5) * 1.6;
+      const tilt = .13 + n * .015 + t * .12;
+      line(c, [-.84, d], [0, d + tilt], [.84, d - tilt]);
+      line(c, [d, -.84], [d - tilt, 0], [d + tilt, .84]);
+    });
+  }],
+  ['Кутові хвилі', (c, n, t) => repeat(4 + n, (i) => {
+    const a = i * TAU / (4 + n) + t * .6;
+    const span = .12 + n * .013;
+    line(c, polar(a - span, .47), polar(a, .88), polar(a + span, .47));
+    if (i % 2 === 0) line(c, polar(a - span, .28), polar(a, .52), polar(a + span, .28));
+  })],
+  ['Сегментована орбіта', (c, n, t) => repeat(3 + n % 4, (j) => {
+    const d = .26 + j * .127;
+    const segments = 3 + n;
+    repeat(segments, (i) => {
+      const a = i * TAU / segments + j * .37 + (j % 2 ? -t : t) * (1 + n * .12);
+      ring(c, 0, 0, d, a, a + TAU / segments * (.39 + j * .07));
+    });
+  })],
+  ['Кадри зсуву', (c, n, t, s) => repeat(4 + n, (i) => {
+    const a = i / (3 + n);
+    const x = -.58 + a * .62 + Math.sin(i * .8 + t * 2 + s) * .24;
+    const y = -.75 + a * 1.14;
+    const w = .8 - a * .33;
+    const h = .36 - a * .17;
+    line(c, [x, y + h], [x, y], [x + w, y], [x + w, y + h * .55], [x + w * .45, y + h * .55]);
+  })],
+  ['Перлини', (c, n, t) => repeat(8 + n * 2, (i) => {
+    const a = i * 2.399 + t * (.7 + n * .11);
+    const d = Math.sqrt((i + 1) / (9 + n * 2)) * .91;
+    const [x, y] = polar(a, d);
+    ring(c, x, y, .035 + ((i + n) % 4) * .018);
+    if (i % 3 === 0) line(c, [x, y], polar(a - .55, d * .76));
+  })],
+  ['Бічна смуга', (c, n, t) => repeat(3 + n, (j) => {
+    const base = (j / (2 + n) - .5) * 1.37;
+    const points = Array.from({ length: 29 }, (_, i) => {
+      const x = i / 14 - 1;
+      const envelope = 1 - Math.abs(x);
+      const wave = Math.sin(x * (3 + n * .58) + j * .58 - t * 4);
+      return [x * .88, base + wave * envelope * (.22 + n * .02)];
+    });
+    line(c, ...points);
+  })],
+  ['Жорсткий розрив', (c, n, t, s) => repeat(2 + n, (j) => {
+    const a = j * TAU / (2 + n) + t * .65;
+    const middle = .44 + Math.sin(j * 7 + s) * .11;
+    const turn = .4 + n * .032;
+    line(c, polar(a, .1), polar(a, middle), polar(a + turn, .68), polar(a + turn, .94));
+    line(c, polar(a, middle), polar(a - turn * .45, .69));
+  })],
+  ['Піксельна мозаїка', (c, n, t, s) => {
+    const width = 4 + n;
+    const step = 1.55 / width;
+    repeat(width * width, (i) => {
+      const x = i % width;
+      const y = Math.floor(i / width);
+      if ((x * 13 + y * 7 + s + n * 3) % 9 < 4) return;
+      const drift = Math.sin(y * .8 + t * 4) * .17;
+      const side = step * (.47 + (x + y) % 3 * .13);
+      c.fillRect(x * step - .775 + drift, y * step - .775, side, side);
+    });
+  }],
+  ['Магнітне поле', (c, n, t) => repeat(4 + n, (j) => {
+    const a = j * TAU / (4 + n) + t * .4;
+    const path = Array.from({ length: 21 }, (_, i) => {
+      const p = i / 20;
+      return polar(a + Math.sin(p * Math.PI) * (.58 + n * .065), .13 + p * .78);
+    });
+    line(c, ...path);
+    ring(c, ...path.at(-1), .04 + j % 3 * .014);
+  })],
+  ['Просторове ехо', (c, n, t) => repeat(3 + n, (j) => {
+    const a = j / (2 + n);
+    const [x, y] = polar(a * (3.1 + n * .23) + t * .9, a * .51);
+    c.save();
+    c.translate(x, y);
+    poly(c, 3 + n % 4, .19 + a * .26, -a * 3 + t);
+    c.restore();
+  })],
+  ['Фазові пари', (c, n, t) => {
+    const left = 2 + n % 4;
+    const right = 3 + Math.floor(n / 4);
+    repeat(3, (j) => line(c, ...Array.from({ length: 81 }, (_, i) => {
+      const a = i * TAU / 80;
+      const y = .72 - j * .13;
+      return [.82 * Math.sin(a * left + t * 2 + j * .56), y * Math.cos(a * right + j * .29)];
+    })));
+  }],
+  ['Кварцовий візерунок', (c, n, t) => {
+    const sides = 5 + n;
+    const vertices = Array.from({ length: sides }, (_, i) => polar(i * TAU / sides + t * .53, .9));
+    const leap = 2 + n % 4;
+    repeat(sides, (i) => {
+      const [x, y] = vertices[i];
+      line(c, [x, y], vertices[(i + leap) % sides], [x * .43, y * .43]);
+      c.strokeRect(x - .021, y - .021, .042, .042);
+    });
+  }, 11],
+];
+for (const [family, paint, count = glitchPresets.length] of glitchFamilies) {
+  for (const [variant, label] of glitchPresets.slice(0, count).entries()) {
+    effects.push([family + ' · ' + label, (c, r, t, s) => {
+      c.scale(r, r);
+      c.lineWidth /= r;
+      paint(c, variant, t, s);
+    }]);
+  }
+}
 const ink = [1, 2, 3, 4].map((index) => getComputedStyle(document.documentElement).getPropertyValue('--ink-' + index).trim());
 let deck = [];
 let previousEffect = -1;
