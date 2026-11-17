@@ -151,7 +151,7 @@ h2{font-size:clamp(1.6rem,7vw,2.45rem);letter-spacing:-.055em;line-height:1}
 .pad{width:100%;height:100%;background:none;border:0;display:grid;place-content:center;justify-items:center;gap:12px;user-select:none}
 .pad:focus-visible{outline-offset:-6px}
 .disc{width:clamp(118px,38vw,184px);aspect-ratio:1;border-radius:50%;display:grid;place-content:center;border:1px solid var(--page-accent,#eb2450);background:radial-gradient(circle,transparent 47%,color-mix(in oklch,var(--page-accent,#eb2450) 12%,transparent) 48% 49%,transparent 50% 65%,color-mix(in oklch,var(--page-accent,#eb2450) 35%,transparent) 66%,transparent 68%);box-shadow:0 0 36px color-mix(in oklch,var(--page-accent,#eb2450) 23%,transparent);font-size:2rem}
-.pad:active .disc,.disc.hit{background-color:color-mix(in oklch,var(--page-accent,#eb2450) 35%,transparent)}
+.pad:active .disc{background-color:color-mix(in oklch,var(--page-accent,#eb2450) 35%,transparent)}
 .meter{font-size:.8rem;font-variant-numeric:tabular-nums}
 .tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
 .tabs button,.small{min-height:44px;border:1px solid var(--border,#542531);border-radius:var(--radius-card,4px);background:var(--card,#230811);font-size:clamp(.68rem,3.2vw,.82rem);padding:5px 4px}
@@ -167,10 +167,12 @@ h2{font-size:clamp(1.6rem,7vw,2.45rem);letter-spacing:-.055em;line-height:1}
 .cell{width:clamp(43px,13vw,58px);aspect-ratio:1;border:1px solid var(--border,#542531);border-radius:4px;background:var(--card,#230811);color:var(--muted-foreground,#d7a6b4)}
 .cell[aria-pressed="true"]{border-color:var(--page-accent,#eb2450);background:color-mix(in oklch,var(--page-accent,#eb2450) 42%,var(--background,#140509));color:var(--foreground,#f8e8ed)}
 .field{position:absolute;inset:0;width:100%;height:100%;display:block}
-#sandShake{position:absolute;z-index:3;right:12px;bottom:10px}
+#sandShake,#orbitClear{position:absolute;z-index:3;right:12px;bottom:10px}
 .gyro-toggle{position:absolute;z-index:3;right:12px;top:10px;min-width:110px}
 .gyro-toggle[aria-pressed="true"]{border-color:var(--page-accent,#eb2450);color:var(--foreground,#fff);background:color-mix(in oklch,var(--page-accent,#eb2450) 30%,var(--card,#230811))}
 .overlay{position:absolute;z-index:1;left:14px;bottom:12px;padding:5px 8px;background:var(--background,#140509);border-left:2px solid var(--page-accent,#eb2450);pointer-events:none}
+#orbitStat{right:112px;width:fit-content;transition:background-color .4s}
+#orbitStat.rec{background:color-mix(in oklch,var(--page-accent,#eb2450) 38%,var(--background,#140509))}
 .ball{position:absolute;top:0;left:0;width:33px;height:33px;border-radius:50%;background:radial-gradient(circle at 34% 26%,var(--foreground,#f8e8ed),var(--page-accent,#eb2450) 30%,var(--background,#140509) 70%);box-shadow:0 0 22px var(--page-accent,#eb2450);pointer-events:none}
 .track{position:absolute;inset:14px;border:1px dashed var(--border,#542531);border-radius:24px;pointer-events:none;background:radial-gradient(circle,color-mix(in oklch,var(--page-accent,#eb2450) 28%,transparent) 1px,transparent 1px) center/14px 14px}
 #cubeMoves{min-height:2lh;max-width:30ch;font:1rem/1.35 ui-monospace,monospace;overflow-wrap:anywhere}
@@ -197,9 +199,11 @@ h2{font-size:clamp(1.6rem,7vw,2.45rem);letter-spacing:-.055em;line-height:1}
 <body><div class="shell">
 <header><h1>Thumb</h1><span>Без звуку</span></header>
 <main>
-<div class="intro"><h2 id="modeName">Пульс</h2><p id="modeHint" class="caption">Відбивай темп одним пальцем. Після паузи почнеться нова серія.</p></div>
-<section class="panel" id="pulse" aria-labelledby="modeName">
-<button class="pad" id="tap" aria-label="Відбити удар"><span class="disc" id="disc" aria-hidden="true">⊕</span><span class="meter" id="pulseStat">Почни в будь-якому темпі</span></button>
+<div class="intro"><h2 id="modeName">Орбіта</h2><p id="modeHint" class="caption">Тягни від планети й відпускай, як рогатку. Тап — кругова орбіта. Злиті планети стають важчими.</p></div>
+<section class="panel" id="orbit" aria-labelledby="modeName">
+<canvas id="orbitPad" class="field pointer" tabindex="0" role="button" aria-label="Орбіта: зірка в центрі поля. Тягни від точки й відпускай, щоб запустити планету. Тап або Enter чи пробіл запускає планету на кругову орбіту."></canvas>
+<span class="caption overlay" id="orbitStat" role="status">На орбіті 0 · обертів 0 · рекорд 0</span>
+<button class="small" id="orbitClear">Очистити</button>
 </section>
 <section class="panel" id="loop" aria-labelledby="modeName" hidden>
 <div class="area pointer" id="loopPad" tabindex="0" aria-label="Поле свайпів. Також працюють стрілки клавіатури."><div class="stack"><span class="loop-ring" id="loopArrow" aria-hidden="true">↑</span><span class="meter" id="loopStat" role="status">Готово кіл: 0</span></div></div>
@@ -238,7 +242,7 @@ document.addEventListener('selectstart', (event) => event.preventDefault());
 document.addEventListener('contextmenu', (event) => event.preventDefault());
 document.addEventListener('dblclick', (event) => event.preventDefault());
 const modes = {
-  pulse: ['Пульс', 'Відбивай темп одним пальцем. Після паузи почнеться нова серія.'],
+  orbit: ['Орбіта', 'Тягни від планети й відпускай, як рогатку. Тап — кругова орбіта. Злиті планети стають важчими.'],
   loop: ['Петля', 'Свайпай за стрілкою: вгору, праворуч, униз, ліворуч. У своєму темпі.'],
   glitch: ['Глітч', 'Торкнись для нового ефекту. Проведи пальцем, щоб лишити слід.'],
   roll: ['Перекат', 'Підхопи кульку, проведи й відпусти. Вона покотиться за інерцією.'],
@@ -273,6 +277,7 @@ let mode;
 function select(id) {
   if (mode === id) return;
   if (mode === 'test' && sandCells) sandSave();
+  if (mode === 'orbit') orbitLeave();
   mode = id;
   for (const [key, button] of tabs) {
     $(key).hidden = key !== id;
@@ -280,31 +285,11 @@ function select(id) {
   }
   [$('modeName').textContent, $('modeHint').textContent] = modes[id];
   save('mode', id);
-  if (id === 'glitch') paintGlitchField();
+  if (id === 'orbit') orbitShow();
+  else if (id === 'glitch') paintGlitchField();
   else if (id === 'roll') { placeBall(); if (gyroEnabled) launchBall(0, 0); }
   else if (id === 'test') sandShow();
 }
-
-let lastTap = 0;
-let intervals = [];
-let hitTimer;
-$('tap').onclick = () => {
-  const now = performance.now();
-  const interval = now - lastTap;
-  if (lastTap && interval < 115) return;
-  if (!lastTap || interval > 2200) intervals = [];
-  else intervals = [...intervals.slice(-7), interval];
-  lastTap = now;
-  const average = intervals.reduce((sum, value) => sum + value, 0) / intervals.length;
-  const deviation = intervals.reduce((sum, value) => sum + Math.abs(value - average), 0) / intervals.length;
-  const pace = Math.round(60000 / average);
-  $('pulseStat').textContent = intervals.length >= 3
-    ? pace + ' BPM · відхилення ' + Math.round(deviation) + ' мс'
-    : intervals.length ? pace + ' BPM' : 'Ще один удар';
-  $('disc').classList.add('hit');
-  clearTimeout(hitTimer);
-  hitTimer = setTimeout(() => $('disc').classList.remove('hit'), 110);
-};
 
 const directions = ['ArrowUp', 'ArrowRight', 'ArrowDown', 'ArrowLeft'];
 let step = 0;
@@ -879,7 +864,7 @@ new ResizeObserver(() => {
     if (reduced.matches && marks.length) showGlitch(performance.now());
     else if (!glitchFrame) paintGlitchField();
   } else if (mode === 'roll') moveBall(ballState.x, ballState.y);
-}).observe($('pulse').parentElement);
+}).observe($('orbit').parentElement);
 
 const sandCv = $('sandPad');
 const sandCtx = sandCv.getContext('2d');
@@ -1110,8 +1095,309 @@ $('sandShake').onclick = () => {
 };
 new ResizeObserver(() => { if (mode === 'test' && sandInit()) sandDraw(); }).observe(sandCv);
 window.addEventListener('pagehide', () => { if (sandCells) sandSave(); });
+const orbitCv = $('orbitPad');
+const orbitCtx = orbitCv.getContext('2d');
+const GM = .017, SOFT2 = .0004, STAR_R = .035, STEP = 1 / 120, MAX_PLANETS = 24, SLING = 1.3, DRAG_MAX = .45;
+const orbitRing = Array.from({ length: 28 }, (_, i) => {
+  const a0 = (i + Math.random() * .2) * TAU / 28;
+  return { a0, a1: a0 + TAU / 28 * (.45 + Math.random() * .4), off: Math.random() * 4 };
+});
+let orbitW = 0, orbitH = 0, orbitL = 1, orbitDpr = 0;
+let orbitBodies = null, orbitRgb = null;
+let orbitTurns = 0, orbitAbsorbed = 0, orbitLost = 0;
+let orbitBest = Math.max(0, Number(read('orbitBest')) | 0);
+let orbitFrame = 0, orbitLast = 0, orbitAcc = 0, orbitAim = null;
+let orbitFlashes = [], orbitDebris = [], orbitShift = null;
+let orbitShiftAt = 0, orbitFlashAt = 0, orbitRecordAt = 0, orbitStatAt = 0, orbitStatN = -1, orbitStatText = '';
+function orbitBody(x, y, vx, vy, m, c, cum) {
+  return { x, y, vx, vy, m, c, cum, ang: Math.atan2(y, x), revs: Math.floor(Math.abs(cum) / TAU), trail: [], fade: 1, dying: false, gone: false };
+}
+function orbitLoad() {
+  orbitBodies = [];
+  orbitRgb = sandColors();
+  let s = null;
+  try { s = JSON.parse(read('orbit') || 'null'); } catch {}
+  if (!s || !Array.isArray(s.p)) return;
+  for (const q of s.p.slice(0, MAX_PLANETS)) {
+    if (!q || ![q.x, q.y, q.vx, q.vy, q.m, q.u].every(Number.isFinite) || q.m <= 0 || !Array.isArray(q.c) || q.c.length !== 3) continue;
+    orbitBodies.push(orbitBody(q.x, q.y, q.vx, q.vy, q.m, q.c.map((n) => clamp(n | 0, 0, 255)), q.u));
+  }
+  orbitTurns = s.t | 0;
+  orbitAbsorbed = s.a | 0;
+  orbitLost = s.l | 0;
+}
+function orbitSave() {
+  if (!orbitBodies) return;
+  const r = (n) => Math.round(n * 1e5) / 1e5;
+  save('orbit', JSON.stringify({
+    t: orbitTurns, a: orbitAbsorbed, l: orbitLost,
+    p: orbitBodies.filter((b) => !b.dying).map((b) => ({ x: r(b.x), y: r(b.y), vx: r(b.vx), vy: r(b.vy), m: b.m, c: b.c, u: r(b.cum) })),
+  }));
+}
+function orbitFit() {
+  const w = orbitCv.clientWidth, h = orbitCv.clientHeight;
+  if (!w || !h) return false;
+  const ratio = Math.min(devicePixelRatio || 1, 2);
+  if (w !== orbitW || h !== orbitH || ratio !== orbitDpr) {
+    orbitW = w; orbitH = h; orbitDpr = ratio; orbitL = Math.min(w, h);
+    orbitCv.width = Math.round(w * ratio);
+    orbitCv.height = Math.round(h * ratio);
+  }
+  if (!orbitBodies) orbitLoad();
+  return true;
+}
+const orbitRadius = (b) => .011 * Math.cbrt(b.m);
+function orbitStepBody(b) {
+  let d = b.x * b.x + b.y * b.y + SOFT2;
+  let k = -GM / (d * Math.sqrt(d)) * STEP / 2;
+  b.vx += b.x * k; b.vy += b.y * k;
+  b.x += b.vx * STEP; b.y += b.vy * STEP;
+  d = b.x * b.x + b.y * b.y + SOFT2;
+  k = -GM / (d * Math.sqrt(d)) * STEP / 2;
+  b.vx += b.x * k; b.vy += b.y * k;
+}
+function orbitFlash(now) {
+  if (now - orbitFlashAt < 350) return;
+  orbitFlashAt = now;
+  orbitFlashes.push(now);
+}
+function orbitBurst(x, y, c) {
+  if (reduced.matches) return;
+  const n = 4 + Math.floor(Math.random() * 5);
+  for (let i = 0; i < n; i++) {
+    const a = Math.random() * TAU, v = .03 + Math.random() * .06;
+    orbitDebris.push({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, c, life: 1 });
+  }
+}
+function orbitSim() {
+  const bodies = orbitBodies;
+  const limit = 3 * Math.hypot(orbitW, orbitH) / orbitL;
+  const now = performance.now();
+  for (const b of bodies) {
+    orbitStepBody(b);
+    if (b.dying) { b.fade -= STEP; if (b.fade <= 0) b.gone = true; continue; }
+    const a = Math.atan2(b.y, b.x);
+    let d = a - b.ang;
+    if (d > Math.PI) d -= TAU; else if (d < -Math.PI) d += TAU;
+    b.cum += d; b.ang = a;
+    const revs = Math.floor(Math.abs(b.cum) / TAU);
+    if (revs > b.revs) {
+      orbitTurns += revs - b.revs;
+      b.revs = revs;
+      if (revs > orbitBest) { orbitBest = revs; save('orbitBest', String(revs)); orbitRecordAt = now; }
+    }
+    const r = Math.hypot(b.x, b.y);
+    if (r < STAR_R) { b.gone = true; orbitAbsorbed++; orbitFlash(now); }
+    else if (r > limit) { b.gone = true; orbitLost++; }
+  }
+  for (let i = 0; i < bodies.length; i++) {
+    const a = bodies[i];
+    if (a.gone || a.dying) continue;
+    for (let j = i + 1; j < bodies.length; j++) {
+      const b = bodies[j];
+      if (b.gone || b.dying || Math.hypot(a.x - b.x, a.y - b.y) > orbitRadius(a) + orbitRadius(b)) continue;
+      const m = a.m + b.m;
+      a.c = a.c.map((v, k) => Math.round((v * a.m + b.c[k] * b.m) / m));
+      a.vx = (a.vx * a.m + b.vx * b.m) / m;
+      a.vy = (a.vy * a.m + b.vy * b.m) / m;
+      a.x = (a.x * a.m + b.x * b.m) / m;
+      a.y = (a.y * a.m + b.y * b.m) / m;
+      a.cum = Math.sign(a.m >= b.m ? a.cum : b.cum || 1) * Math.max(Math.abs(a.cum), Math.abs(b.cum));
+      a.m = m; a.ang = Math.atan2(a.y, a.x);
+      a.revs = Math.floor(Math.abs(a.cum) / TAU);
+      b.gone = true;
+      orbitBurst(a.x, a.y, a.c);
+    }
+  }
+  if (bodies.some((b) => b.gone)) orbitBodies = bodies.filter((b) => !b.gone);
+}
+function orbitLaunch(x, y, vx, vy) {
+  if (!orbitFit()) return;
+  const live = orbitBodies.filter((b) => !b.dying);
+  if (live.length >= MAX_PLANETS) live[0].dying = true;
+  orbitBodies.push(orbitBody(x, y, vx, vy, 1, orbitRgb[1 + Math.floor(Math.random() * 3)], 0));
+  orbitKick();
+}
+function orbitCircular(x, y) {
+  let r = Math.hypot(x, y);
+  if (r < .08) {
+    const a = r ? Math.atan2(y, x) : Math.random() * TAU;
+    x = Math.cos(a) * .08; y = Math.sin(a) * .08; r = .08;
+  }
+  const v = Math.sqrt(GM * r * r / Math.pow(r * r + SOFT2, 1.5)) * (1 + (Math.random() * 2 - 1) * .15);
+  const dir = Math.random() < .5 ? -1 : 1;
+  orbitLaunch(x, y, -y / r * v * dir, x / r * v * dir);
+}
+function orbitStatus(now, force) {
+  const n = orbitBodies.filter((b) => !b.dying).length;
+  const text = `На орбіті ${n} · обертів ${orbitTurns} · рекорд ${orbitBest}`
+    + (orbitAbsorbed ? ` · поглинуто ${orbitAbsorbed}` : '') + (orbitLost ? ` · втрачено ${orbitLost}` : '');
+  if (text !== orbitStatText && (force || n !== orbitStatN || now - orbitStatAt >= 1000)) {
+    orbitStatText = text; orbitStatN = n; orbitStatAt = now;
+    $('orbitStat').textContent = text;
+  }
+  $('orbitStat').classList.toggle('rec', now - orbitRecordAt < 900);
+}
+const orbitRgba = (c, a) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
+function orbitDraw(now) {
+  const g = orbitCtx, L = orbitL, cx = orbitW / 2, cy = orbitH / 2;
+  const small = reduced.matches;
+  g.setTransform(orbitDpr, 0, 0, orbitDpr, 0, 0);
+  g.clearRect(0, 0, orbitW, orbitH);
+  const star = orbitRgb[0], sr = STAR_R * L;
+  const glow = g.createRadialGradient(cx, cy, sr * .4, cx, cy, sr * 4);
+  glow.addColorStop(0, orbitRgba(star, .55));
+  glow.addColorStop(1, orbitRgba(star, 0));
+  g.fillStyle = glow;
+  g.fillRect(cx - sr * 4, cy - sr * 4, sr * 8, sr * 8);
+  g.fillStyle = orbitRgba(star, 1);
+  g.beginPath(); g.arc(cx, cy, sr, 0, TAU); g.fill();
+  if (!small && now >= orbitShiftAt) {
+    orbitShift = { i: Math.floor(Math.random() * orbitRing.length), dx: (1 + Math.floor(Math.random() * 3)) * (Math.random() < .5 ? -1 : 1), dy: (Math.floor(Math.random() * 4) - 1) * (Math.random() < .5 ? -1 : 1), until: now + 260 };
+    orbitShiftAt = now + 2500 + Math.random() * 2500;
+  }
+  if (small || (orbitShift && now > orbitShift.until)) orbitShift = null;
+  g.lineWidth = 1.5;
+  g.strokeStyle = orbitRgba(star, .7);
+  orbitRing.forEach((s, i) => {
+    const moved = orbitShift && orbitShift.i === i;
+    g.beginPath();
+    g.arc(cx + (moved ? orbitShift.dx : 0), cy + (moved ? orbitShift.dy : 0), sr * 1.7 + s.off, s.a0, s.a1);
+    g.stroke();
+  });
+  orbitFlashes = orbitFlashes.filter((t) => now - t < 700);
+  for (const t of orbitFlashes) {
+    const p = (now - t) / 700;
+    g.lineWidth = 2;
+    g.strokeStyle = orbitRgba(star, (1 - p) * .8);
+    g.beginPath(); g.arc(cx, cy, sr * (small ? 2 : 1.2 + p * 2.6), 0, TAU); g.stroke();
+  }
+  const trailMax = small ? 12 : 60;
+  for (const b of orbitBodies) {
+    b.trail.push(b.x, b.y);
+    if (b.trail.length > trailMax * 2) b.trail.splice(0, b.trail.length - trailMax * 2);
+    const n = b.trail.length / 2;
+    g.lineWidth = 1.2;
+    for (let i = 1; i < n; i++) {
+      g.strokeStyle = orbitRgba(b.c, i / n * .5 * b.fade);
+      g.beginPath();
+      g.moveTo(cx + b.trail[i * 2 - 2] * L, cy + b.trail[i * 2 - 1] * L);
+      g.lineTo(cx + b.trail[i * 2] * L, cy + b.trail[i * 2 + 1] * L);
+      g.stroke();
+    }
+    g.fillStyle = orbitRgba(b.c, b.fade);
+    g.beginPath(); g.arc(cx + b.x * L, cy + b.y * L, Math.max(2.5, orbitRadius(b) * L), 0, TAU); g.fill();
+  }
+  orbitDebris = orbitDebris.filter((p) => p.life > 0);
+  for (const p of orbitDebris) {
+    p.x += p.vx / 60; p.y += p.vy / 60; p.life -= 1 / 50;
+    g.fillStyle = orbitRgba(p.c, Math.max(0, p.life));
+    g.fillRect(Math.round(cx + p.x * L), Math.round(cy + p.y * L), 2, 2);
+  }
+  if (orbitAim?.drag) {
+    const v = orbitAim.v;
+    const sx = cx + orbitAim.x * L, sy = cy + orbitAim.y * L;
+    g.save();
+    g.setLineDash([4, 5]);
+    g.lineWidth = 1.5;
+    g.strokeStyle = orbitRgba(orbitRgb[2], .8);
+    g.beginPath(); g.moveTo(sx, sy); g.lineTo(cx + orbitAim.px * L, cy + orbitAim.py * L); g.stroke();
+    g.restore();
+    const p = { x: orbitAim.x, y: orbitAim.y, vx: v[0], vy: v[1] };
+    g.fillStyle = orbitRgba(orbitRgb[2], .7);
+    for (let i = 0; i < 60; i++) {
+      for (let k = 0; k < 4; k++) orbitStepBody(p);
+      if (Math.hypot(p.x, p.y) < STAR_R) break;
+      g.fillRect(cx + p.x * L - 1, cy + p.y * L - 1, 2, 2);
+    }
+    g.fillStyle = orbitRgba(orbitRgb[2], 1);
+    g.beginPath(); g.arc(sx, sy, 3, 0, TAU); g.fill();
+  }
+}
+function orbitTick(now) {
+  orbitFrame = 0;
+  if (mode !== 'orbit' || document.hidden || !orbitFit()) return;
+  orbitAcc += orbitLast ? Math.min((now - orbitLast) / 1000, .05) : 0;
+  orbitLast = now;
+  while (orbitAcc >= STEP) { orbitSim(); orbitAcc -= STEP; }
+  orbitDraw(now);
+  orbitStatus(now);
+  orbitFrame = requestAnimationFrame(orbitTick);
+}
+function orbitKick() {
+  if (orbitFrame || mode !== 'orbit' || document.hidden) return;
+  orbitLast = 0;
+  orbitFrame = requestAnimationFrame(orbitTick);
+}
+function orbitStop() {
+  cancelAnimationFrame(orbitFrame);
+  orbitFrame = 0;
+}
+function orbitShow() {
+  if (!orbitFit()) return;
+  orbitDraw(performance.now());
+  orbitStatus(performance.now(), true);
+  orbitKick();
+}
+function orbitLeave() {
+  orbitSave();
+  orbitStop();
+  orbitAim = null;
+}
+function orbitPoint(event) {
+  const r = orbitCv.getBoundingClientRect();
+  return [(event.clientX - r.left - orbitW / 2) / orbitL, (event.clientY - r.top - orbitH / 2) / orbitL];
+}
+function orbitPull() {
+  let dx = orbitAim.x - orbitAim.px, dy = orbitAim.y - orbitAim.py;
+  const len = Math.hypot(dx, dy);
+  if (len > DRAG_MAX) { dx *= DRAG_MAX / len; dy *= DRAG_MAX / len; }
+  orbitAim.v = [dx * SLING, dy * SLING];
+}
+orbitCv.onpointerdown = (event) => {
+  if (!event.isPrimary || event.button !== 0 || !orbitFit()) return;
+  const [x, y] = orbitPoint(event);
+  if (Math.hypot(x, y) * orbitL < STAR_R * orbitL + 14) return;
+  orbitAim = { id: event.pointerId, x, y, px: x, py: y, sx: event.clientX, sy: event.clientY, drag: false, v: [0, 0] };
+  orbitCv.setPointerCapture(event.pointerId);
+};
+orbitCv.onpointermove = (event) => {
+  if (orbitAim?.id !== event.pointerId) return;
+  [orbitAim.px, orbitAim.py] = orbitPoint(event);
+  if (Math.hypot(event.clientX - orbitAim.sx, event.clientY - orbitAim.sy) >= 14) orbitAim.drag = true;
+  orbitPull();
+};
+orbitCv.onpointerup = (event) => {
+  const aim = orbitAim;
+  if (aim?.id !== event.pointerId) return;
+  orbitAim = null;
+  if (aim.drag) orbitLaunch(aim.x, aim.y, aim.v[0], aim.v[1]);
+  else orbitCircular(aim.x, aim.y);
+};
+orbitCv.onlostpointercapture = () => { orbitAim = null; };
+orbitCv.onkeydown = (event) => {
+  if (event.key !== 'Enter' && event.key !== ' ') return;
+  event.preventDefault();
+  if (event.repeat) return;
+  const a = Math.random() * TAU, r = .15 + Math.random() * .25;
+  orbitCircular(Math.cos(a) * r, Math.sin(a) * r);
+};
+$('orbitClear').onclick = () => {
+  if (!orbitFit()) return;
+  orbitBodies = [];
+  orbitDebris = [];
+  orbitTurns = orbitAbsorbed = orbitLost = 0;
+  orbitSave();
+  orbitDraw(performance.now());
+  orbitStatus(performance.now(), true);
+};
+new ResizeObserver(() => { if (mode === 'orbit' && orbitFit()) orbitDraw(performance.now()); }).observe(orbitCv);
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) { orbitSave(); orbitStop(); } else orbitKick();
+});
+window.addEventListener('pagehide', orbitSave);
 const initialMode = read('mode');
-select(Object.hasOwn(modes, initialMode) ? initialMode : 'pulse');
+select(Object.hasOwn(modes, initialMode) ? initialMode : 'orbit');
 </script>
 </body>
 </html>
