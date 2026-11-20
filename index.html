@@ -8,124 +8,9 @@
 <link rel="icon" href="./favicon.ico?v=8969ec77" sizes="16x16 32x32 48x48">
 <link rel="icon" type="image/png" href="./favicon.png?v=313363b9" sizes="32x32">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png?v=30a44379" sizes="180x180">
-<style>
-/* Source: https://files.mandrock.me/web/mandrock0-tokens.css */
-/*
- * mandrock0 design tokens — extracted verbatim from 0mandrock1/designClaude
- * (src/index.css, commit fac28d4). Dark-only: there is no light palette in
- * this system, :root already holds the dark values, .dark is a no-op alias.
- * Self-contained: drop into any project, no Tailwind/build step required.
- */
-
-:root {
-  /* ---- UA theme: tell the browser this is a dark page ----
-     without it iOS Safari treats the page as light: white overscroll,
-     white form controls/scrollbars, light toolbar tint in both modes */
-  color-scheme: dark;
-
-  /* ---- radii ---- */
-  --radius: 0.625rem;
-  --radius-card: 0.25rem;
-  --radius-control: 1rem;
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
-
-  /* ---- brand accents (raw) ---- */
-  --accent-purple: oklch(70% .30 320);
-  --accent-cyan: oklch(80% .15 205);
-  --accent-lime: oklch(86% .21 150);
-  --accent-crimson: oklch(60% .23 13);
-  --accent-shader: var(--accent-purple);
-
-  /* ---- role layer (semantic aliases onto the accents) ---- */
-  --action: var(--accent-purple);
-  --info: var(--accent-cyan);
-  --ok: var(--accent-lime);
-  --alive: var(--accent-crimson);
-
-  /* ---- surface / text colors (shadcn semantic layer) ---- */
-  --background: oklch(11% .105 14);
-  --foreground: oklch(96% .035 20);
-  --card: oklch(16.5% .125 12);
-  --card-foreground: var(--foreground);
-  --popover: oklch(16.5% .125 12);
-  --popover-foreground: var(--foreground);
-  --primary: var(--accent-shader);
-  --primary-foreground: oklch(10% .04 356);
-  --secondary: oklch(23.5% .14 12);
-  --secondary-foreground: var(--foreground);
-  --muted: oklch(20% .13 12);
-  --muted-foreground: oklch(70% .095 16);
-  --accent: var(--accent-shader);
-  --accent-foreground: oklch(10% .04 356);
-  --destructive: oklch(70% .18 38);
-
-  /* ---- borders / outlines / focus ring ---- */
-  --border: oklch(33% .16 10 / .55);
-  --input: oklch(33% .16 10 / .7);
-  --ring: var(--accent-shader);
-
-  /* ---- glow / shadow system (one hue, three strengths) ---- */
-  --glow: var(--accent-shader);
-  --glow-ambient: 0 0 0 1px color-mix(in oklch, var(--glow) 14%, transparent);
-  --glow-attention: 0 0 0 1px color-mix(in oklch, var(--glow) 55%, transparent),
-                     0 0 20px color-mix(in oklch, var(--glow) 40%, transparent);
-  --glow-interaction: 0 0 0 1.5px color-mix(in oklch, var(--glow) 85%, transparent),
-                       0 0 28px color-mix(in oklch, var(--glow) 60%, transparent);
-
-  /* ---- chart palette ---- */
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-
-  /* ---- sidebar ---- */
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: var(--accent-shader);
-  --sidebar-primary-foreground: oklch(10% .04 356);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: var(--accent-shader);
-
-  /* ---- typography ---- */
-  --font-sans: 'Geist Variable', sans-serif;
-  --font-heading: var(--font-sans);
-
-  /* ---- motion gate (a11y: prefers-reduced-motion drives this to 0) ---- */
-  --glitch-budget: 1;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  :root {
-    --glitch-budget: 0;
-  }
-}
-
-</style>
-<style>
-/* Source: https://tools.mandrock.me/palettes/accents.css */
-/* mandrock0 page accents — рантайм-шар поверх mandrock0-tokens.css
- * Джерело правди: https://tools.mandrock.me/palettes/palettes.json
- * Використання:  <html data-accent="lime">
- *                <link rel="stylesheet" href=".../mandrock0-tokens.css">
- *                <link rel="stylesheet" href="https://tools.mandrock.me/palettes/accents.css">
- * Сторінка далі читає лише var(--page-accent) і НЕ називає конкретний колір.
- */
-:root{ --page-accent: var(--accent-crimson); }
-[data-accent="crimson"]{ --page-accent: var(--accent-crimson); }
-[data-accent="purple"] { --page-accent: var(--accent-purple);  }
-[data-accent="cyan"]   { --page-accent: var(--accent-cyan);    }
-[data-accent="lime"]   { --page-accent: var(--accent-lime);    }
-
-</style>
+<link rel="stylesheet" href="https://files.mandrock.me/web/mandrock0-tokens.css">
+<link rel="stylesheet" href="https://tools.mandrock.me/palettes/accents.css">
+<script defer src="https://files.mandrock.me/web/mandrock0-ambient.js" data-profile="calm" data-layers="grid,foci,debris" data-section="crimson"></script>
 <style>
 :root{--ink-1:var(--page-accent,#ef4972);--ink-2:var(--action,#f15abf);--ink-3:var(--info,#4cd1e3);--ink-4:var(--ok,#b8ed87);color-scheme:dark;font-family:system-ui,sans-serif;background:var(--background,#140509);color:var(--foreground,#f8e8ed)}
 *{box-sizing:border-box}
@@ -173,6 +58,35 @@ h2{font-size:clamp(1.6rem,7vw,2.45rem);letter-spacing:-.055em;line-height:1}
 .track{position:absolute;inset:14px;border:1px dashed var(--border,#542531);border-radius:24px;pointer-events:none;background:radial-gradient(circle,color-mix(in oklch,var(--page-accent,#eb2450) 28%,transparent) 1px,transparent 1px) center/14px 14px}
 #cubeMoves{min-height:2lh;max-width:30ch;font:1rem/1.35 ui-monospace,monospace;overflow-wrap:anywhere}
 @media (max-height:600px){.shell{gap:8px}.intro{min-height:0;margin-bottom:8px}.panel{min-height:200px}}
+
+/* Sand controls derive every pigment and border from design-mandrock0. */
+.sand-auto{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:8px;font:11px ui-monospace,monospace}
+.sand-auto .small{min-height:38px;padding:5px 9px}
+.sand-auto-label{color:var(--muted-foreground);margin-right:auto;text-transform:uppercase;letter-spacing:.09em}
+.sand-auto button[aria-pressed="true"]{border-color:var(--page-accent);background:color-mix(in oklch,var(--page-accent) 23%,var(--card))}
+.sand-auto button:disabled{opacity:.45;cursor:default}
+.sand-controls{margin-top:10px}
+.sand-palette{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}
+.sand-color{--sand-ink:var(--accent-crimson);border:1px solid var(--border);border-radius:var(--radius-card);background:var(--card);color:var(--foreground);text-align:left;padding:7px 6px;min-width:0;min-height:67px;font:11px/1.15 ui-monospace,monospace}
+.sand-color::before{content:"";display:inline-block;width:10px;height:10px;margin-right:5px;background:var(--sand-ink);box-shadow:0 0 9px color-mix(in oklch,var(--sand-ink) 45%,transparent);vertical-align:baseline}
+.sand-color strong{font-size:11px}
+.sand-color span{display:block;color:var(--muted-foreground);font-size:10px;line-height:1.22;margin-top:5px;overflow-wrap:anywhere}
+.sand-color[aria-pressed="true"]{border-color:var(--sand-ink);box-shadow:inset 0 -2px var(--sand-ink);background:color-mix(in oklch,var(--sand-ink) 17%,var(--card))}
+.sand-color:nth-child(1){--sand-ink:var(--accent-crimson)}
+.sand-color:nth-child(2){--sand-ink:var(--accent-purple)}
+.sand-color:nth-child(3){--sand-ink:var(--accent-cyan)}
+.sand-color:nth-child(4){--sand-ink:var(--accent-lime)}
+.sand-color:nth-child(5){--sand-ink:color-mix(in oklch,var(--accent-crimson) 70%,var(--accent-lime))}
+.sand-color:nth-child(6){--sand-ink:color-mix(in oklch,var(--foreground) 40%,var(--muted-foreground))}
+.sand-color:nth-child(7){--sand-ink:color-mix(in oklch,var(--accent-lime) 68%,var(--accent-crimson))}
+.sand-color:nth-child(8){--sand-ink:color-mix(in oklch,var(--accent-cyan) 45%,var(--foreground))}
+#test{--sand-steam:color-mix(in oklch,var(--accent-cyan) 30%,var(--foreground));--sand-plant:color-mix(in oklch,var(--accent-lime) 75%,var(--background));--sand-ash:var(--muted-foreground)}
+#test.panel{min-height:clamp(225px,32svh,330px)}
+.sand-feedback{min-height:1.4em;margin-top:5px;font:10px/1.4 ui-monospace,monospace;color:var(--muted-foreground)}
+#sandAutoControls[hidden],#sandControls[hidden]{display:none}
+@media(max-height:700px){.sand-color{min-height:55px;padding:5px}.sand-color span{margin-top:2px}.sand-auto .small{min-height:34px}.sand-palette{gap:4px}}
+@media(prefers-reduced-motion:reduce){.sand-color{transition:none}}
+
 </style>
 <!-- og:start (managed by og-preview skill) -->
 <meta name="description" content="Keeps the phone hand busy while the rest of you is busy with something else. Eight no-sound, no-attention activities for one thumb: sling planets into orbit, follow the arrow loop, paint glitches, roll a ball, grow a vine, crack the ice, recall a cube algorithm, pour sand. Mobile-first, no login.">
@@ -226,11 +140,21 @@ h2{font-size:clamp(1.6rem,7vw,2.45rem);letter-spacing:-.055em;line-height:1}
 <section class="panel" id="cube" aria-labelledby="modeName" hidden>
 <div class="area"><div class="stack"><strong id="cubeName"></strong><span id="cubeMoves" role="status"></span><div class="stepper"><button class="small" id="cubeReveal">Наступний хід</button><button class="small" id="cubeNext">Інша картка</button></div></div></div>
 </section>
+<div class="sand-auto" id="sandAutoControls" hidden role="group" aria-label="Автоматична зміна матеріалу">
+<span class="sand-auto-label">Автоколір</span>
+<button class="small" id="sandAuto" aria-pressed="true">Увімкнено</button>
+<button class="small" id="sandCycle" aria-pressed="true">Цикл</button>
+<button class="small" id="sandRandom" aria-pressed="false">random.org</button>
+</div>
 <section class="panel" id="test" aria-labelledby="modeName" hidden>
-<canvas id="sandPad" class="field pointer" tabindex="0" role="img" aria-label="Пісочниця. Веди пальцем або тримай Enter, щоб сипати пісок."></canvas>
-<span class="caption overlay" id="sandStat">Піщинок: 0</span>
+<canvas id="sandPad" class="field pointer" tabindex="0" role="button" aria-label="Пісочниця. Проведи пальцем або утримуй Enter, щоб насипати вибраний матеріал."></canvas>
+<span class="caption overlay" id="sandStat" role="status">Частинок: 0</span>
 <button class="small gyro-toggle" id="sandGyro" aria-pressed="false">Гіроскоп</button>
 <button class="small" id="sandShake">Струсити</button>
+</section>
+<section class="sand-controls" id="sandControls" aria-label="Матеріали" hidden>
+<div class="sand-palette" id="sandPalette" role="group" aria-label="Вибір матеріалу"></div>
+<p class="sand-feedback" id="sandFeedback" role="status" aria-live="polite">Вибір матеріалу вимикає автоколір.</p>
 </section>
 </main>
 <noscript>Увімкни JavaScript у браузері, щоб запустити гру.</noscript>
@@ -250,7 +174,7 @@ const modes = {
   sprout: ['Пагін', 'Тримай палець — лоза тягнеться до нього. Кожна має свій колір, а відпустиш — розпуститься бутон іншої форми.'],
   crack: ['Тріщина', 'Тапай по льоду. «+ Шар» затягує екран новим склом поверх, «Скинути» дає чисту плиту.'],
   cube: ['Кубик', 'Пригадай алгоритм 3×3 і відкривай по одному ходу.'],
-  test: ['Пісок', 'Сип пісок пальцем. Кожен новий дотик змінює колір; гіроскоп дає керувати нахилом.'],
+  test: ['Пісок', 'Вибирай матеріал унизу, малюй пальцем і спостерігай за реакціями. Автоколір: цикл або random.org.'],
 };
 function read(key) {
   try { return localStorage.getItem('thumb.v1.' + key); } catch { return null; }
@@ -287,6 +211,8 @@ function select(id) {
     button.setAttribute('aria-current', String(key === id));
   }
   [$('modeName').textContent, $('modeHint').textContent] = modes[id];
+  $('sandAutoControls').hidden = id !== 'test';
+  $('sandControls').hidden = id !== 'test';
   save('mode', id);
   if (id === 'orbit') orbitShow();
   else if (id === 'glitch') paintGlitchField();
@@ -830,7 +756,7 @@ const sandCtx = sandCv.getContext('2d');
 const SW = 60;
 const sandFallback = [[239, 73, 114], [241, 90, 191], [76, 209, 227], [184, 237, 135]];
 let SH = 0, sandCells = null, sandBuf = null, sandImg = null, sandRgb = null;
-let sandFrame = 0, sandPour = null, sandLayer = 0, sandFlip = false;
+let sandFrame = 0, sandPour = null, sandFlip = false, sandAges = null, sandIdleFrames = 0;
 let gyroEnabled = false;
 let gyroOrientationLocked = false;
 async function lockGyroOrientation() {
@@ -863,7 +789,7 @@ function onOrientation(event) {
   gravity.x = clamp(gx * Math.cos(radians) - gy * Math.sin(radians), -1, 1);
   gravity.y = clamp(gx * Math.sin(radians) + gy * Math.cos(radians), -1, 1);
   if (mode === 'roll' && !ballState.frame && ballState.id === null) launchBall(0, 0);
-  if (mode === 'test') sandKick();
+  if (mode === 'test') { sandIdleFrames=0; sandKick(); }
 }
 async function toggleGyro() {
   if (gyroEnabled) {
@@ -872,7 +798,7 @@ async function toggleGyro() {
     unlockGyroOrientation();
     gravity.x = 0; gravity.y = 1;
     updateGyroUI();
-    if (mode === 'test') sandKick();
+    if (mode === 'test') { sandIdleFrames=0; sandKick(); }
     return;
   }
   if (typeof DeviceOrientationEvent === 'undefined') {
@@ -890,7 +816,7 @@ async function toggleGyro() {
     void lockGyroOrientation();
     updateGyroUI();
     if (mode === 'roll') launchBall(0, 0);
-    if (mode === 'test') sandKick();
+    if (mode === 'test') { sandIdleFrames=0; sandKick(); }
   } catch {
     alert('Не вдалося отримати доступ до датчиків нахилу.');
   }
@@ -917,143 +843,421 @@ function sandColors() {
     return out;
   } catch { return sandFallback; }
 }
+// IDs 1..4 preserve legacy saves. 9..11 are reaction products, not paintbrushes.
+const SM = Object.freeze({
+  SAND:1, ACID:2, WATER:3, SEED:4, FIRE:5, STONE:6,
+  OIL:7, ICE:8, STEAM:9, PLANT:10, ASH:11
+});
+const sandTools = [
+  ["Пісок", "Сиплеться, тоне у воді"],
+  ["Кислота", "Розчиняє камінь і паростки"],
+  ["Вода", "Тече, гасить вогонь, ростить"],
+  ["Насіння", "Проростає поруч із водою"],
+  ["Вогонь", "Підпалює олію, плавить лід"],
+  ["Камінь", "Нерухома перешкода"],
+  ["Олія", "Плаває над водою, горить"],
+  ["Лід", "Тане від вогню"]
+];
+let sandPrefs = {};
+try { sandPrefs = JSON.parse(read("sand-prefs") || "{}") || {}; } catch {}
+let sandSelected = Number.isInteger(sandPrefs.tool) && sandPrefs.tool >= 1 && sandPrefs.tool <= 8 ? sandPrefs.tool : 1;
+let sandAuto = sandPrefs.auto !== false;
+let sandAutoMode = sandPrefs.mode === "random" ? "random" : "cycle";
+let sandRandomPool = [];
+let sandRandomRequest = null;
+let sandRandomRetryAt = 0;
+let sandReactions = 0;
+const sandButtons = [];
+for (const [i, [name, help]] of sandTools.entries()) {
+  const button = document.createElement("button");
+  button.className = "sand-color";
+  button.type = "button";
+  button.dataset.material = String(i + 1);
+  const title = document.createElement("strong");
+  title.textContent = name;
+  const description = document.createElement("span");
+  description.textContent = help;
+  button.append(title, description);
+  button.addEventListener("click", () => {
+    sandSelected = i + 1;
+    sandAuto = false;
+    sandSavePrefs();
+    console.info("[thumb:sand]", {event:"material_selected",material:sandSelected,auto:false});
+    sandUpdateControls();
+  });
+  $("sandPalette").append(button);
+  sandButtons.push(button);
+}
+function sandSavePrefs() {
+  save("sand-prefs", JSON.stringify({tool:sandSelected, auto:sandAuto, mode:sandAutoMode}));
+}
+function sandMessage(message) { $("sandFeedback").textContent = message; }
+function sandUpdateControls() {
+  for (const [i, button] of sandButtons.entries()) button.setAttribute("aria-pressed", String(sandSelected === i + 1));
+  $("sandAuto").setAttribute("aria-pressed", String(sandAuto));
+  $("sandAuto").textContent = sandAuto ? "Увімкнено" : "Вимкнено";
+  $("sandCycle").setAttribute("aria-pressed", String(sandAutoMode === "cycle"));
+  $("sandRandom").setAttribute("aria-pressed", String(sandAutoMode === "random"));
+  $("sandCycle").disabled = $("sandRandom").disabled = !sandAuto;
+  if (!sandAuto) sandMessage("Ручний вибір: " + sandTools[sandSelected-1][0] + ". Автоколір вимкнено.");
+  else if (sandAutoMode === "cycle") sandMessage("Цикл: наступний матеріал на кожному новому дотику.");
+  else if (sandRandomPool.length) sandMessage("random.org: отримано справжню випадкову послідовність.");
+  else if (sandRandomRequest) sandMessage("random.org: завантаження випадкових кольорів…");
+  else sandMessage("random.org: немає даних, поточний колір збережено.");
+}
+async function sandFetchRandom() {
+  if (!sandAuto || sandAutoMode !== "random" || sandRandomRequest || Date.now() < sandRandomRetryAt) return;
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 6500);
+  sandRandomRequest = (async () => {
+    const url = "https://www.random.org/integers/?num=24&min=1&max=8&col=1&base=10&format=plain&rnd=new";
+    const response = await fetch(url, {signal:controller.signal, credentials:"omit", cache:"no-store"});
+    if (!response.ok) throw new Error("HTTP " + response.status);
+    const values = (await response.text()).trim().split(/\s+/).map(Number);
+    if (values.length !== 24 || values.some(v => !Number.isInteger(v) || v < 1 || v > 8)) {
+      throw new Error("Invalid random.org payload");
+    }
+    sandRandomPool.push(...values);
+    console.info("[thumb:sand]", {event:"randomorg_batch", count:values.length});
+  })();
+  sandUpdateControls();
+  try { await sandRandomRequest; }
+  catch (error) {
+    sandRandomRetryAt = Date.now() + 30000;
+    console.warn("[thumb:sand]", {event:"randomorg_failed", message:String(error)});
+  } finally {
+    clearTimeout(timeout);
+    sandRandomRequest = null;
+    sandUpdateControls();
+  }
+}
+function sandNextColor() {
+  if (!sandAuto) return;
+  if (sandAutoMode === "cycle") {
+    sandSelected = (sandSelected % sandTools.length) + 1;
+  } else {
+    if (!sandRandomPool.length) {
+      void sandFetchRandom();
+      sandMessage("random.org недоступний: залишаю поточний матеріал.");
+      return;
+    }
+    sandSelected = sandRandomPool.shift();
+    if (sandRandomPool.length < 7) void sandFetchRandom();
+  }
+  sandSavePrefs();
+  sandUpdateControls();
+}
+$("sandAuto").onclick = () => {
+  sandAuto = !sandAuto;
+  console.info("[thumb:sand]", {event:"auto_toggle",auto:sandAuto,mode:sandAutoMode});
+  sandSavePrefs();
+  sandUpdateControls();
+  if (sandAuto && sandAutoMode === "random") void sandFetchRandom();
+};
+$("sandCycle").onclick = () => {
+  sandAutoMode = "cycle";
+  console.info("[thumb:sand]", {event:"auto_mode",mode:"cycle"});
+  sandSavePrefs();
+  sandUpdateControls();
+};
+$("sandRandom").onclick = () => {
+  sandAutoMode = "random";
+  console.info("[thumb:sand]", {event:"auto_mode",mode:"random"});
+  sandSavePrefs();
+  sandUpdateControls();
+  void sandFetchRandom();
+};
+sandUpdateControls();
+
+function sandPaletteColors() {
+  const palette = [null];
+  const canvas = document.createElement("canvas");
+  canvas.width = canvas.height = 1;
+  const ctx = canvas.getContext("2d", {willReadFrequently:true});
+  const legacy = sandColors();
+  const sample = (css, fallback) => {
+    try {
+      ctx.clearRect(0,0,1,1);
+      ctx.fillStyle = css;
+      ctx.fillRect(0,0,1,1);
+      const d = ctx.getImageData(0,0,1,1).data;
+      return d[3] ? [d[0],d[1],d[2]] : fallback;
+    } catch { return fallback; }
+  };
+  for (const [i, button] of sandButtons.entries()) {
+    const color = getComputedStyle(button).getPropertyValue("--sand-ink").trim();
+    palette.push(sample(color, legacy[i%4]));
+  }
+  const style = getComputedStyle($("test"));
+  for (const [name, fallback] of [
+    ["--sand-steam",legacy[2]], ["--sand-plant",legacy[3]], ["--sand-ash",legacy[1]]
+  ]) palette.push(sample(style.getPropertyValue(name).trim(), fallback));
+  return palette;
+}
 function sandInit() {
   const w = sandCv.clientWidth, h = sandCv.clientHeight;
   if (!w || !h) return false;
   if (!sandCells) {
     let saved = null;
-    try { saved = JSON.parse(read('sand') || 'null'); } catch {}
-    const ok = saved && saved.w === SW && saved.d && saved.d.length === SW * saved.h;
-    SH = ok ? saved.h : clamp(Math.round(SW * h / w), 40, 160);
-    sandCells = new Uint8Array(SW * SH);
+    try { saved = JSON.parse(read("sand") || "null"); } catch {}
+    const ok = saved && saved.w === SW && Number.isInteger(saved.h) && saved.h >= 40 && saved.h <= 160 &&
+      typeof saved.d === "string" && saved.d.length === SW * saved.h;
+    SH = ok ? saved.h : clamp(Math.round(SW*h/w),40,160);
+    sandCells = new Uint8Array(SW*SH);
+    sandAges = new Uint8Array(SW*SH);
     if (ok) {
-      for (let i = 0; i < saved.d.length; i++) sandCells[i] = clamp(saved.d.charCodeAt(i) - 48, 0, 4);
-      sandLayer = saved.l | 0;
-    }
-    sandBuf = document.createElement('canvas');
-    sandBuf.width = SW;
-    sandBuf.height = SH;
-    sandImg = sandBuf.getContext('2d').createImageData(SW, SH);
-    sandRgb = sandColors();
-  }
-  const ratio = devicePixelRatio || 1;
-  const cw = Math.round(w * ratio), ch = Math.round(h * ratio);
-  if (sandCv.width !== cw || sandCv.height !== ch) { sandCv.width = cw; sandCv.height = ch; }
-  return true;
-}
-function sandStep() {
-  let moved = 0;
-  sandFlip = !sandFlip;
-  const gx = gyroEnabled ? gravity.x : 0;
-  const gy = gyroEnabled ? gravity.y : 1;
-  const horizontal = Math.abs(gx) > Math.abs(gy);
-  const dx = horizontal ? Math.sign(gx) : 0;
-  const dy = horizontal ? 0 : (Math.sign(gy) || 1);
-  const width = SW, height = SH;
-  // Traverse from the leading edge so each grain moves at most once per step.
-  const total = width * height;
-  for (let n = 0; n < total; n++) {
-    const row = Math.floor(n / width), col = n % width;
-    const x = horizontal ? (dx > 0 ? width - 1 - col : col) : (sandFlip ? col : width - 1 - col);
-    const y = horizontal ? (sandFlip ? row : height - 1 - row) : (dy > 0 ? height - 1 - row : row);
-    const i = y * width + x, c = sandCells[i];
-    if (!c) continue;
-    const nx = x + dx, ny = y + dy;
-    if (nx >= 0 && nx < width && ny >= 0 && ny < height && !sandCells[ny * width + nx]) {
-      sandCells[ny * width + nx] = c; sandCells[i] = 0; moved++; continue;
-    }
-    const sign = Math.random() < .5 ? -1 : 1;
-    for (const side of [sign, -sign]) {
-      const sx = horizontal ? nx : x + side;
-      const sy = horizontal ? y + side : ny;
-      const shoulderX = horizontal ? x : sx;
-      const shoulderY = horizontal ? sy : y;
-      if (sx < 0 || sx >= width || sy < 0 || sy >= height || shoulderX < 0 || shoulderX >= width || shoulderY < 0 || shoulderY >= height) continue;
-      if (!sandCells[sy * width + sx] && !sandCells[shoulderY * width + shoulderX]) {
-        sandCells[sy * width + sx] = c; sandCells[i] = 0; moved++; break;
+      if (saved.v !== 2) console.info("[thumb:sand]", {event:"legacy_save_loaded",cells:saved.d.length});
+      for (let i=0;i<saved.d.length;i++) {
+        const c = saved.d.charCodeAt(i)-48;
+        sandCells[i] = c>=0 && c<=SM.ASH ? c : 0;
+      }
+      if (!Number.isInteger(sandPrefs.tool) && Number.isInteger(saved.l)) {
+        sandSelected = 1 + (((saved.l%4)+4)%4);
       }
     }
+    sandBuf = document.createElement("canvas");
+    sandBuf.width = SW; sandBuf.height = SH;
+    sandImg = sandBuf.getContext("2d").createImageData(SW,SH);
+    sandRgb = sandPaletteColors();
+    sandUpdateControls();
   }
-  return moved;
+  const ratio = Math.min(devicePixelRatio || 1,3);
+  const cw = Math.round(w*ratio), ch = Math.round(h*ratio);
+  if (sandCv.width !== cw || sandCv.height !== ch) { sandCv.width=cw; sandCv.height=ch; }
+  return true;
+}
+function sandReplace(i,material) { sandCells[i]=material; sandAges[i]=0; }
+function sandMove(i,j) {
+  sandCells[j]=sandCells[i]; sandAges[j]=sandAges[i];
+  sandCells[i]=0; sandAges[i]=0;
+}
+function sandSwap(i,j) {
+  const c=sandCells[i], age=sandAges[i];
+  sandCells[i]=sandCells[j]; sandAges[i]=sandAges[j];
+  sandCells[j]=c; sandAges[j]=age;
+}
+function sandStep() {
+  let changed=0, active=0;
+  sandFlip=!sandFlip;
+  const gx=gyroEnabled?gravity.x:0, gy=gyroEnabled?gravity.y:1;
+  const horizontal=Math.abs(gx)>Math.abs(gy);
+  const dx=horizontal?(Math.sign(gx)||1):0;
+  const dy=horizontal?0:(Math.sign(gy)||1);
+  const width=SW, height=SH;
+  for (let n=0;n<width*height;n++) {
+    const row=Math.floor(n/width), col=n%width;
+    const x=horizontal?(dx>0?width-1-col:col):(sandFlip?col:width-1-col);
+    const y=horizontal?(sandFlip?row:height-1-row):(dy>0?height-1-row:row);
+    const i=y*width+x, c=sandCells[i];
+    if (!c) continue;
+    let ns=null;
+    if ([SM.FIRE,SM.ACID,SM.WATER,SM.PLANT,SM.SEED,SM.STEAM].includes(c)) {
+      ns=[];
+      if (x>0) ns.push(i-1);
+      if (x<width-1) ns.push(i+1);
+      if (y>0) ns.push(i-width);
+      if (y<height-1) ns.push(i+width);
+    }
+    if (c===SM.FIRE) {
+      active++;
+      if (++sandAges[i]>42) { sandReplace(i,Math.random()<.48?SM.ASH:0); changed++; continue; }
+      let extinguished=false;
+      for (const j of ns) {
+        const other=sandCells[j];
+        if (other===SM.WATER) {
+          sandReplace(j,SM.STEAM); sandReplace(i,0); changed++; sandReactions++;
+          extinguished=true; break;
+        }
+        if (other===SM.ICE) { sandReplace(j,SM.WATER); changed++; sandReactions++; }
+        else if ((other===SM.OIL || other===SM.PLANT || other===SM.SEED) && Math.random()<.33) {
+          sandReplace(j,SM.FIRE); changed++; sandReactions++;
+        }
+      }
+      if (extinguished) continue;
+    } else if (c===SM.ACID) {
+      let reacted=false;
+      for (const j of ns) {
+        if ([SM.STONE,SM.PLANT,SM.SEED].includes(sandCells[j])) {
+          sandReplace(j,sandCells[j]===SM.STONE?SM.SAND:0);
+          sandReactions++; changed++; reacted=true;
+          if (Math.random()<.45) { sandReplace(i,SM.WATER); break; }
+        }
+      }
+      if (reacted && sandCells[i]!==c) continue;
+    } else if (c===SM.WATER) {
+      for (const j of ns) {
+        if (sandCells[j]===SM.SEED) { sandReplace(j,SM.PLANT); changed++; sandReactions++; }
+      }
+    } else if (c===SM.SEED) {
+      if (ns.some(j=>sandCells[j]===SM.WATER)) {
+        sandReplace(i,SM.PLANT); changed++; sandReactions++; continue;
+      }
+    } else if (c===SM.PLANT) {
+      if (sandAges[i]<65) {
+        const wet=ns.find(j=>sandCells[j]===SM.WATER);
+        if (wet!==undefined) {
+          active++; sandAges[i]++;
+          if (Math.random()<.13) {
+            const growth=[i-width,i-1,i+1,i+width].find(j=>
+              j>=0 && j<width*height &&
+              Math.abs((j%width)-x)+Math.abs(Math.floor(j/width)-y)===1 && !sandCells[j]);
+            if (growth!==undefined) {
+              sandReplace(growth,SM.PLANT);
+              if (Math.random()<.34) sandReplace(wet,0);
+              changed++; sandReactions++;
+            }
+          }
+        }
+      }
+      continue;
+    } else if (c===SM.STEAM) {
+      active++;
+      if (++sandAges[i]>78 || ns.some(j=>sandCells[j]===SM.ICE)) {
+        sandReplace(i,SM.WATER); changed++; continue;
+      }
+    }
+    if (c===SM.STONE || c===SM.ICE) continue;
+    const gas=c===SM.FIRE || c===SM.STEAM;
+    const fluid=c===SM.WATER || c===SM.ACID || c===SM.OIL;
+    const vx=gas?-dx:dx, vy=gas?-dy:dy;
+    const nx=x+vx, ny=y+vy;
+    if (nx>=0 && nx<width && ny>=0 && ny<height) {
+      const j=ny*width+nx, other=sandCells[j];
+      if (!other) { sandMove(i,j); changed++; continue; }
+      if (((c===SM.SAND || c===SM.SEED || c===SM.ASH) &&
+            (other===SM.WATER || other===SM.ACID || other===SM.OIL)) ||
+          (c===SM.WATER && other===SM.OIL) ||
+          (gas && (other===SM.WATER || other===SM.OIL || other===SM.ACID))) {
+        sandSwap(i,j); changed++; continue;
+      }
+    }
+    const sign=Math.random()<.5?-1:1;
+    let didMove=false;
+    for (const side of [sign,-sign]) {
+      const sx=horizontal?nx:x+side, sy=horizontal?y+side:ny;
+      const shoulderX=horizontal?x:sx, shoulderY=horizontal?sy:y;
+      if (sx<0 || sx>=width || sy<0 || sy>=height ||
+          shoulderX<0 || shoulderX>=width || shoulderY<0 || shoulderY>=height) continue;
+      if (!sandCells[sy*width+sx] && !sandCells[shoulderY*width+shoulderX]) {
+        sandMove(i,sy*width+sx); changed++; didMove=true; break;
+      }
+    }
+    if (didMove || (!fluid && !gas)) continue;
+    // Viscous liquids spread along surfaces. Gas diffuses around obstacles.
+    for (const side of [sign,-sign]) {
+      const sx=x+(horizontal?0:side), sy=y+(horizontal?side:0);
+      if (sx<0 || sx>=width || sy<0 || sy>=height) continue;
+      const j=sy*width+sx;
+      if (!sandCells[j]) { sandMove(i,j); changed++; break; }
+    }
+  }
+  return changed+active;
 }
 function sandAdd() {
   if (!sandPour) return;
-  const cx = Math.floor(sandPour.x * SW), cy = Math.floor(sandPour.y * SH);
-  const color = 1 + (sandLayer % 4);
-  for (let n = 0; n < 3; n++) {
-    const x = clamp(cx + Math.round((Math.random() - .5) * 4), 0, SW - 1);
-    const y = clamp(cy + Math.round((Math.random() - .5) * 2), 0, SH - 1);
-    const i = y * SW + x;
-    if (!sandCells[i]) { sandCells[i] = color; }
+  const cx=Math.floor(sandPour.x*SW), cy=Math.floor(sandPour.y*SH);
+  for (let n=0;n<4;n++) {
+    const x=clamp(cx+Math.round((Math.random()-.5)*5),0,SW-1);
+    const y=clamp(cy+Math.round((Math.random()-.5)*4),0,SH-1);
+    const i=y*SW+x;
+    if (!sandCells[i]) sandReplace(i,sandSelected);
   }
 }
 function sandDraw() {
-  const d = sandImg.data;
-  let count = 0;
-  for (let i = 0; i < sandCells.length; i++) {
-    const c = sandCells[i], o = i * 4;
-    if (!c) { d[o + 3] = 0; continue; }
-    const rgb = sandRgb[c - 1], shade = ((i * 2654435761) >>> 28) * 3;
-    d[o] = Math.max(0, rgb[0] - shade);
-    d[o + 1] = Math.max(0, rgb[1] - shade);
-    d[o + 2] = Math.max(0, rgb[2] - shade);
-    d[o + 3] = 255;
+  const data=sandImg.data;
+  let count=0;
+  for (let i=0;i<sandCells.length;i++) {
+    const material=sandCells[i], offset=i*4;
+    if (!material) { data[offset+3]=0; continue; }
+    const rgb=sandRgb[material] || sandRgb[1], shade=((i*2654435761)>>>28)*2;
+    data[offset]=Math.max(0,rgb[0]-shade);
+    data[offset+1]=Math.max(0,rgb[1]-shade);
+    data[offset+2]=Math.max(0,rgb[2]-shade);
+    data[offset+3]=material===SM.STEAM?160:255;
     count++;
   }
-  sandBuf.getContext('2d').putImageData(sandImg, 0, 0);
-  sandCtx.imageSmoothingEnabled = false;
-  sandCtx.clearRect(0, 0, sandCv.width, sandCv.height);
-  sandCtx.drawImage(sandBuf, 0, 0, sandCv.width, sandCv.height);
-  $('sandStat').textContent = `Піщинок: ${count}`;
+  sandBuf.getContext("2d").putImageData(sandImg,0,0);
+  sandCtx.imageSmoothingEnabled=false;
+  sandCtx.clearRect(0,0,sandCv.width,sandCv.height);
+  sandCtx.drawImage(sandBuf,0,0,sandCv.width,sandCv.height);
+  $("sandStat").textContent="Частинок: "+count+" · реакцій: "+sandReactions;
 }
 function sandSave() {
-  let s = '';
-  for (const c of sandCells) s += String.fromCharCode(48 + c);
-  save('sand', JSON.stringify({ w: SW, h: SH, l: sandLayer, d: s }));
+  if (!sandCells) return;
+  let encoded="";
+  for (const c of sandCells) encoded+=String.fromCharCode(48+c);
+  save("sand",JSON.stringify({v:2,w:SW,h:SH,l:sandSelected-1,d:encoded}));
+  sandSavePrefs();
+  console.info("[thumb:sand]", {event:"grid_saved",cells:sandCells.length,reactions:sandReactions});
 }
 function sandTick() {
-  sandFrame = 0;
-  if (mode !== 'test' || !sandInit()) return;
+  sandFrame=0;
+  if (mode!=="test" || document.hidden || !sandInit()) return;
   sandAdd();
-  let moved = 0;
-  const steps = reduced.matches ? SH : 2;
-  for (let s = 0; s < steps; s++) { moved = sandStep(); if (!moved) break; }
+  let activity=0;
+  for (let s=0;s<(reduced.matches?5:2);s++) {
+    const current=sandStep();
+    activity+=current;
+    if (!current) break;
+  }
   sandDraw();
-  if (moved || sandPour || gyroEnabled) sandFrame = requestAnimationFrame(sandTick);
+  sandIdleFrames = sandPour ? 0 : sandIdleFrames + 1;
+  if ((activity || sandPour) && sandIdleFrames < 120) sandFrame=requestAnimationFrame(sandTick);
   else sandSave();
 }
-function sandKick() { if (!sandFrame) sandFrame = requestAnimationFrame(sandTick); }
-function sandShow() { if (sandInit()) { sandDraw(); sandKick(); } }
-function sandAt(event) {
-  const r = sandCv.getBoundingClientRect();
-  return { x: clamp((event.clientX - r.left) / r.width, 0, .999), y: clamp((event.clientY - r.top) / r.height, 0, .999) };
+function sandKick() {
+  if (!sandFrame && mode==="test" && !document.hidden) sandFrame=requestAnimationFrame(sandTick);
 }
-sandCv.onpointerdown = (event) => {
-  if (!event.isPrimary || event.button !== 0 || !sandInit()) return;
-  sandLayer = (sandLayer + 1) % 4;
-  sandPour = { id: event.pointerId, ...sandAt(event) };
+function sandShow() {
+  if (!sandInit()) return;
+  sandIdleFrames=0;
+  sandDraw();
+  sandUpdateControls();
+  if (sandAuto && sandAutoMode==="random") void sandFetchRandom();
+  sandKick();
+}
+function sandAt(event) {
+  const rect=sandCv.getBoundingClientRect();
+  return {x:clamp((event.clientX-rect.left)/rect.width,0,.999),
+          y:clamp((event.clientY-rect.top)/rect.height,0,.999)};
+}
+sandCv.onpointerdown=event=>{
+  if (!event.isPrimary || event.button!==0 || !sandInit()) return;
+  sandNextColor();
+  sandIdleFrames=0;
+  sandPour={id:event.pointerId,...sandAt(event)};
   sandCv.setPointerCapture(event.pointerId);
   sandKick();
 };
-sandCv.onpointermove = (event) => { if (sandPour?.id === event.pointerId) Object.assign(sandPour, sandAt(event)); };
-sandCv.onlostpointercapture = () => { sandPour = null; };
-sandCv.onkeydown = (event) => {
-  if (event.key !== 'Enter' && event.key !== ' ') return;
+sandCv.onpointermove=event=>{
+  if (sandPour?.id===event.pointerId) Object.assign(sandPour,sandAt(event));
+};
+sandCv.onlostpointercapture=()=>{ sandPour=null; sandKick(); };
+sandCv.onkeydown=event=>{
+  if (event.key!=="Enter" && event.key!==" ") return;
   event.preventDefault();
-  if (!sandInit()) return;
-  if (sandPour?.id === 'key') return;
-  sandLayer = (sandLayer + 1) % 4;
-  sandPour = { id: 'key', x: .5, y: .05 };
+  if (event.repeat || !sandInit() || sandPour?.id==="key") return;
+  sandNextColor();
+  sandIdleFrames=0;
+  sandPour={id:"key",x:.5,y:.05};
   sandKick();
 };
-sandCv.onkeyup = () => { if (sandPour?.id === 'key') sandPour = null; };
-$('sandShake').onclick = () => {
+sandCv.onkeyup=event=>{
+  if ((event.key==="Enter" || event.key===" ") && sandPour?.id==="key") {
+    sandPour=null; sandKick();
+  }
+};
+sandCv.onblur=()=>{ if (sandPour?.id==="key") sandPour=null; };
+$("sandShake").onclick=()=>{
   if (!sandInit()) return;
-  for (let i = 0; i < sandCells.length; i++) if (sandCells[i] && Math.random() < .5) sandCells[i] = 0;
+  sandIdleFrames=0;
+  for (let i=0;i<sandCells.length;i++) if (sandCells[i] && Math.random()<.5) sandReplace(i,0);
   sandKick();
 };
-new ResizeObserver(() => { if (mode === 'test' && sandInit()) sandDraw(); }).observe(sandCv);
-window.addEventListener('pagehide', () => { if (sandCells) sandSave(); });
+new ResizeObserver(()=>{ if (mode==="test" && sandInit()) sandDraw(); }).observe(sandCv);
+window.addEventListener("pagehide",()=>{ if (sandCells) sandSave(); });
+document.addEventListener("visibilitychange",()=>{ if (!document.hidden && mode==="test") sandKick(); });
+
 const orbitCv = $('orbitPad');
 const orbitCtx = orbitCv.getContext('2d');
 const GM = .017, SOFT2 = .0004, STAR_R = .035, STEP = 1 / 120, MAX_PLANETS = 24, SLING = 1.3, DRAG_MAX = .45;
