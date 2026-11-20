@@ -1227,6 +1227,8 @@ sandCv.onpointerdown=event=>{
   sandIdleFrames=0;
   sandPour={id:event.pointerId,...sandAt(event)};
   sandCv.setPointerCapture(event.pointerId);
+  // A very short tap can finish before requestAnimationFrame fires.
+  sandAdd();
   sandKick();
 };
 sandCv.onpointermove=event=>{
@@ -1240,6 +1242,7 @@ sandCv.onkeydown=event=>{
   sandNextColor();
   sandIdleFrames=0;
   sandPour={id:"key",x:.5,y:.05};
+  sandAdd();
   sandKick();
 };
 sandCv.onkeyup=event=>{
